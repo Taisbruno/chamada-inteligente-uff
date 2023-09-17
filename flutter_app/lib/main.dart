@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_app/screens/classes_screen.dart'; 
 import 'package:flutter_app/screens/home_screen.dart'; 
 
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ClassesScreen(),
+      home: HomePage(),
     );
   }
 }
