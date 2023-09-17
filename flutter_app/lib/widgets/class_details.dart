@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/widgets/student_card.dart';
 
 class ClassDetails extends StatelessWidget {
   final String className;
   final String teacher;
   final String semester;
   final String description; // You can add more class details here
+  final List<Map<String, String>> students;
 
-  ClassDetails({
-    required this.className,
-    required this.teacher,
-    required this.semester,
-    required this.description,
-  });
+  ClassDetails(
+      {required this.className,
+      required this.teacher,
+      required this.semester,
+      required this.description,
+      required this.students});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,43 @@ class ClassDetails extends StatelessWidget {
               ),
             ),
             Text(description),
+            SizedBox(
+              width: 200, // Make the button take up the full width
+              child: ElevatedButton(
+                onPressed: () {
+                  // Action when the "Iniciar Chamada" button is pressed
+                  // Add your logic here
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Colors.green, // Set the button background color to green
+                ),
+                child: const Text(
+                  'Iniciar Chamada',
+                  style: TextStyle(
+                    color: Colors.white, // Set text color to white
+                  ),
+                ),
+              ),
+            ),
+            const Text(
+              'Alunos Inscritos:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: students.length,
+                itemBuilder: (context, index) {
+                  return StudentCard(
+                    studentName: students[index]['studentName']!,
+                    matricula: students[index]['matricula']!,
+                  );
+                },
+              ),
+            ),
             // Add more class details here as needed
           ],
         ),
