@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/class_card.dart';
+import 'package:flutter_app/widgets/custom_app_bar.dart';
 
 class ClassesScreen extends StatelessWidget {
   final Random random = Random();
@@ -56,20 +57,35 @@ class ClassesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.purple[100]!,
-      appBar: AppBar(
-        backgroundColor: Colors.purple[100]!,
-        title: Text('Turmas'),
-      ),
-      body: ListView.builder(
-        itemCount: classes.length,
-        itemBuilder: (context, index) {
-          return ClassCard(
-            className: classes[index]['className']!,
-            teacher: classes[index]['teacher']!,
-            semester: classes[index]['semester']!,
-            color: cardColors[Random().nextInt(cardColors.length)], // cor aleatória
-          );
-        },
+      appBar: CustomAppBar(),
+      body: 
+      Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            alignment: Alignment.center,
+            child: Text(
+              "Turmas",
+              style: TextStyle(
+                color: Colors.purple[300], // Cor do texto
+                fontSize: 24, // Tamanho da fonte
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: classes.length,
+              itemBuilder: (context, index) {
+                return ClassCard(
+                  className: classes[index]['className']!,
+                  teacher: classes[index]['teacher']!,
+                  semester: classes[index]['semester']!,
+                  color: cardColors[random.nextInt(cardColors.length)],
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
