@@ -8,37 +8,37 @@ class ClassesScreen extends StatelessWidget {
   final List<Map<String, String>> classes = [
     {
       "className": "Sistemas Operacionais",
-      "teacher": "Mr. Silva",
+      "teacher": "Professor Silva",
       "semester": "2023.1",
     },
     {
       "className": "Desenvolvimento Web",
-      "teacher": "Mr. Santos",
+      "teacher": "Professor Santos",
       "semester": "2023.1",
     },
     {
       "className": "Programacao I",
-      "teacher": "Mr. Lima",
+      "teacher": "Professor Lima",
       "semester": "2022.2",
     },
     {
       "className": "Estrutura de Dados",
-      "teacher": "Mr. Pereira",
+      "teacher": "Professor Pereira",
       "semester": "2022.2",
     },
     {
       "className": "Projeto de Software",
-      "teacher": "Mr. Johnson",
+      "teacher": "Professor José",
       "semester": "2023.2",
     },
     {
       "className": "Projeto de Aplicacao",
-      "teacher": "Mr. Garcia",
+      "teacher": "Professor Garcia",
       "semester": "2023.2",
     },
     {
-      "className": "Banco de dados",
-      "teacher": "Mr. Martinez",
+      "className": "Gerência de Projetos de Hardware",
+      "teacher": "Professor Martu",
       "semester": "2022.1",
     },
   ];

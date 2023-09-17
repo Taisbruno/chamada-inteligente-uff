@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'class_details.dart';
 
 class ClassCard extends StatelessWidget {
   final String className;
@@ -11,7 +12,7 @@ class ClassCard extends StatelessWidget {
     required this.className,
     required this.teacher,
     required this.semester,
-    required this.color, 
+    required this.color,
   });
 
   @override
@@ -32,7 +33,19 @@ class ClassCard extends StatelessWidget {
         trailing: ElevatedButton(
           onPressed: () {
             // Action when the "Join" button is pressed
-            // You can add navigation to the class, for example.
+            // Navigate to the class details page, which is ClassDetails widget in class_details.dart
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) {
+                return ClassDetails(
+                  className: className,
+                  // Pass the necessary data to ClassDetails
+                  teacher: teacher,
+                  semester: semester,
+                  description:
+                      'Lorem ipsum dolor sit amet.', // Provide the actual class description
+                );
+              }),
+            );
           },
           child: Text('Detalhes'),
         ),
