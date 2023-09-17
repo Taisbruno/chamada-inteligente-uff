@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/classes_screen.dart';
+import 'package:flutter_app/screens/signup_screen.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
@@ -43,7 +44,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       buildMenuButton('Registro', () {
-                        // Código para Registro
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const SignUpScreen()));
                       }),
                       buildMenuButton('Login', () {
                         // Código para Login
