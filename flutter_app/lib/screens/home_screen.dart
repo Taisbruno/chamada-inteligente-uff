@@ -75,11 +75,11 @@ class HomePage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Colors.purple[300],
+                color: Colors.purple[500],
                 shadows: [
                   Shadow(
                     blurRadius: 10.0,
-                    color: Colors.white,
+                    color: Colors.purple,
                     offset: Offset(5.0, 5.0),
                   ),
                 ],
