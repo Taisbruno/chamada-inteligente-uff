@@ -5,14 +5,13 @@ class StudentCard extends StatelessWidget {
   final String matricula;
   final String attendedClasses;
   final String reproved;
-  final String numberOfClasses; // numero total de aulas
+  final String numberOfClasses = "100"; // numero total de aulas
 
   StudentCard({
     required this.studentName,
     required this.matricula,
     required this.attendedClasses,
     required this.reproved,
-    required this.numberOfClasses,
   });
 
   @override

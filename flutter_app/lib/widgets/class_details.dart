@@ -60,7 +60,7 @@ class ClassDetails extends StatelessWidget {
                     // Add your logic here
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green, // Set the button background color to green
+                    backgroundColor: Colors.yellow, // Set the button background color to green
                   ),
                   child: const Text(
                     'Agendar Chamada',
@@ -118,7 +118,6 @@ class ClassDetails extends StatelessWidget {
                     matricula: students[index]['matricula']!,
                     attendedClasses: students[index]['attendedClasses']!,
                     reproved: students[index]['reproved']!,
-                    numberOfClasses: students[index]['numberOfClasses']!
                   );
                 },
               ),
