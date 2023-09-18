@@ -51,28 +51,60 @@ class ClassDetails extends StatelessWidget {
               ),
             ),
             Text(description),
-            SizedBox(
-              width: 200, // Make the button take up the full width
-              child: ElevatedButton(
-                onPressed: () {
-                  // Action when the "Iniciar Chamada" button is pressed
-                  // Add your logic here
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      Colors.green, // Set the button background color to green
-                ),
-                child: const Text(
-                  'Iniciar Chamada',
-                  style: TextStyle(
-                    color: Colors.white, // Set text color to white
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // Action when the "Agendar Chamada" button is pressed
+                    // Add your logic here
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green, // Set the button background color to green
+                  ),
+                  child: const Text(
+                    'Agendar Chamada',
+                    style: TextStyle(
+                      color: Colors.white, // Set text color to white
+                    ),
                   ),
                 ),
-              ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Action when the "Histórico de Chamadas" button is pressed
+                    // Add your logic here
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue, // Set the button background color to blue
+                  ),
+                  child: const Text(
+                    'Histórico de Chamadas',
+                    style: TextStyle(
+                      color: Colors.white, // Set text color to white
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Action when the "Iniciar Chamada" button is pressed
+                    // Add your logic here
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                    Colors.green, // Set the button background color to green
+                  ),
+                  child: const Text(
+                    'Iniciar Chamada',
+                    style: TextStyle(
+                      color: Colors.white, // Set text color to white
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const Text(
-              'Alunos Inscritos:',
-              style: TextStyle(
+            Text(
+              'Alunos Inscritos (${students.length}):',
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
@@ -84,6 +116,9 @@ class ClassDetails extends StatelessWidget {
                   return StudentCard(
                     studentName: students[index]['studentName']!,
                     matricula: students[index]['matricula']!,
+                    attendedClasses: students[index]['attendedClasses']!,
+                    reproved: students[index]['reproved']!,
+                    numberOfClasses: students[index]['numberOfClasses']!
                   );
                 },
               ),
