@@ -2,7 +2,7 @@
 
 O projeto Chamada Inteligente trata-se de um sistema desenvolvido em disciplina de Gerência de Projeto de Software - UFF para gerenciamento de uma chamada/lista de presença que está sendo desenvolvido para fins de um requisito parcial de avaliação, assim como concorre para ser implementado na Superintendência de Tecnologia da Informação (STI/UFF). 
 
-* Objetivo do projeto:
+* **Objetivo do projeto**:
   Fomentar o aprendizado de novas arquiteturas, tecnologias e métodos de desenvolvimento de produtos digitais através da experimentação.
 
 * Data: 16/09/2023
@@ -10,12 +10,14 @@ O projeto Chamada Inteligente trata-se de um sistema desenvolvido em disciplina 
 
 ## 1. Pré-Requisitos
 
-* Windows 10 OU 11.
+* Windows 10 ou 11.
   * [Flutter 3.13.4](https://docs.flutter.dev/get-started/install)
   * [Android Studio](https://developer.android.com/studio)
   * [Visual Studio Code](https://code.visualstudio.com/)
   * Android SDK Command Lines - Obtido através do Android Studio
   * Android SDK Platform Tools 34.0.4 - Obtido através do Android Studio
+  * Dart Plugin - Obtido através do Android Studio
+  * [Dart SDK](https://dart.dev/get-dart) - (_Para o Dart Plugin_) Facilita o entendimento do projeto pela IDE 
 
 
 ## 2. Instruções de construção, execução e uso da API
