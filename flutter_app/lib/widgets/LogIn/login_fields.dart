@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/classes_screen.dart';
 import 'package:flutter_app/screens/login_screen.dart';
+import 'package:flutter_app/screens/signup_screen.dart';
 import 'package:flutter_app/widgets/input_field.dart';
 
 class LogInFields extends StatelessWidget {
@@ -43,7 +44,7 @@ class LogInFields extends StatelessWidget {
       child: const SizedBox(
           width: double.infinity,
           child: Text(
-            "Cadastrar",
+            "Login",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           )),
