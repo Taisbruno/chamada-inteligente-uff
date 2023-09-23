@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/classes_screen.dart';
 import 'package:flutter_app/screens/signup_screen.dart';
+import 'package:flutter_app/screens/login_screen.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
@@ -48,7 +49,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                             builder: (context) => const SignUpScreen()));
                       }),
                       buildMenuButton('Login', () {
-                        // Código para Login
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const LogInScreen()));
                       }),
                       buildMenuButton('Turmas', () {
                         Navigator.push(

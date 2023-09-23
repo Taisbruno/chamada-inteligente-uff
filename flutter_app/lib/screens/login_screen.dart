@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/SignUp/active_button.dart';
-import 'package:flutter_app/widgets/SignUp/signup_fields.dart';
+import 'package:flutter_app/screens/signup_screen.dart';
 import 'package:flutter_app/widgets/input_field.dart';
+import 'package:flutter_app/widgets/LogIn/login_fields.dart';
+import 'package:flutter_app/widgets/SignUp/active_button.dart';
 
-enum UserType { professor, student }
-
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class LogInScreen extends StatefulWidget {
+  const LogInScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignupPageState();
+  State<LogInScreen> createState() => _LoginPageState();
 }
 
-class _SignupPageState extends State<SignUpScreen> {
+class _LoginPageState extends State<LogInScreen> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordConfirmationController =
@@ -35,7 +34,7 @@ class _SignupPageState extends State<SignUpScreen> {
       child: Scaffold(
         appBar: AppBar(
           foregroundColor: Colors.white,
-          title: const Text("Cadastro",
+          title: const Text("Login",
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           backgroundColor: Colors.transparent,
@@ -61,7 +60,7 @@ class _SignupPageState extends State<SignUpScreen> {
                 color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
-          SignUpFields(type: _type),
+          LogInFields(type: _type),
           const SizedBox(height: 20),
           _extraText(),
         ],
@@ -112,7 +111,7 @@ class _SignupPageState extends State<SignUpScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Já possui uma conta? Faça login",
+          "Não possui uma conta? Cadastre-se aqui.",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 16, color: Colors.white),
         ),
