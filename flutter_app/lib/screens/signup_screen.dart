@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/SignUp/active_button.dart';
 import 'package:flutter_app/widgets/SignUp/signup_fields.dart';
-import 'package:flutter_app/widgets/input_field.dart';
 
 enum UserType { professor, student }
 

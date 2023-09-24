@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/screens/active_call_professor.dart';
 import 'package:flutter_app/widgets/student_card.dart';
 
 class ClassDetails extends StatelessWidget {
@@ -56,11 +57,28 @@ class ClassDetails extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ActiveCallScreen()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors
+                        .green, // Set the button background color to green
+                  ),
+                  child: const Text(
+                    'Iniciar Chamada',
+                    style: TextStyle(
+                      color: Colors.white, // Set text color to white
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
                     // Action when the "Agendar Chamada" button is pressed
                     // Add your logic here
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.yellow, // Set the button background color to green
+                    backgroundColor: Colors
+                        .yellow, // Set the button background color to green
                   ),
                   child: const Text(
                     'Agendar Chamada',
@@ -75,26 +93,11 @@ class ClassDetails extends StatelessWidget {
                     // Add your logic here
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue, // Set the button background color to blue
+                    backgroundColor:
+                        Colors.blue, // Set the button background color to blue
                   ),
                   child: const Text(
                     'Histórico de Chamadas',
-                    style: TextStyle(
-                      color: Colors.white, // Set text color to white
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Action when the "Iniciar Chamada" button is pressed
-                    // Add your logic here
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                    Colors.green, // Set the button background color to green
-                  ),
-                  child: const Text(
-                    'Iniciar Chamada',
                     style: TextStyle(
                       color: Colors.white, // Set text color to white
                     ),
