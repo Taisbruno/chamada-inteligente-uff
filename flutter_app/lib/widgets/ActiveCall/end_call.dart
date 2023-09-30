@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-Widget endButton() {
+Widget endButton(BuildContext context) {
   return ElevatedButton(
-    onPressed: () {},
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
     style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
         backgroundColor: Colors.transparent,

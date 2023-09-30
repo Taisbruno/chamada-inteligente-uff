@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/signup_screen.dart';
-import 'package:flutter_app/widgets/input_field.dart';
 import 'package:flutter_app/widgets/LogIn/login_fields.dart';
 import 'package:flutter_app/widgets/SignUp/active_button.dart';
 
