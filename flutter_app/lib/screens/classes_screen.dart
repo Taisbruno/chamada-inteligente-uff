@@ -13,7 +13,7 @@ class ClassesScreen extends StatelessWidget {
     },
     {
       "className": "Desenvolvimento Web",
-      "teacher": "Professor Santos",
+      "teacher": "Professor Silva",
       "semester": "2023.1",
     },
     {
@@ -51,41 +51,48 @@ class ClassesScreen extends StatelessWidget {
     Colors.yellow[100]!,
     Colors.brown[100]!,
     Colors.teal[100]!,
-    ];
+  ];
+
+  ClassesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.purple[100]!,
-      appBar: CustomAppBar(),
-      body: 
-      Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            alignment: Alignment.center,
-            child: Text(
-              "Turmas",
-              style: TextStyle(
-                color: Colors.purple[300], // Cor do texto
-                fontSize: 24, // Tamanho da fonte
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Theme.of(context).primaryColor,
+          Theme.of(context).primaryColorDark
+        ],
+      )),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
+        appBar: AppBar(
+          foregroundColor: Colors.white,
+          title: const Text("Turmas",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          backgroundColor: Colors.transparent,
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: classes.length,
+                itemBuilder: (context, index) {
+                  return ClassCard(
+                    className: classes[index]['className']!,
+                    teacher: classes[index]['teacher']!,
+                    semester: classes[index]['semester']!,
+                    color: cardColors[random.nextInt(cardColors.length)],
+                  );
+                },
               ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: classes.length,
-              itemBuilder: (context, index) {
-                return ClassCard(
-                  className: classes[index]['className']!,
-                  teacher: classes[index]['teacher']!,
-                  semester: classes[index]['semester']!,
-                  color: cardColors[random.nextInt(cardColors.length)],
-                );
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

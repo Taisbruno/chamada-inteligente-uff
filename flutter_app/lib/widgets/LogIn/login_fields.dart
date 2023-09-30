@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/classes_screen.dart';
-import 'package:flutter_app/screens/login_screen.dart';
 import 'package:flutter_app/screens/signup_screen.dart';
 import 'package:flutter_app/widgets/input_field.dart';
 

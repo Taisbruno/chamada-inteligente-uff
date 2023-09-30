@@ -93,7 +93,7 @@ class _ActiveCallState extends State<ActiveCallScreen> {
                   const SizedBox(height: 20),
                   buildTime(duration),
                   const SizedBox(height: 30),
-                  endButton(),
+                  endButton(context),
                   const SizedBox(height: 15),
                   addStudentButton(),
                   const SizedBox(height: 10),

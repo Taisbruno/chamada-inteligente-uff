@@ -39,7 +39,7 @@ Widget timeCard({required String time, required String label}) {
       const SizedBox(height: 10),
       Text(
         label,
-        style: TextStyle(color: Colors.white, fontSize: 12),
+        style: const TextStyle(color: Colors.white, fontSize: 12),
       )
     ],
   );

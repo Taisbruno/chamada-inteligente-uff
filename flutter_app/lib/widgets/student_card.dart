@@ -7,7 +7,7 @@ class StudentCard extends StatelessWidget {
   final String reproved;
   final String numberOfClasses = "100"; // numero total de aulas
 
-  StudentCard({
+  const StudentCard({super.key, 
     required this.studentName,
     required this.matricula,
     required this.attendedClasses,
@@ -18,10 +18,10 @@ class StudentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 3,
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       color: Colors.blue[100], // You can customize the card color
       child: ListTile(
-        leading: Icon(Icons.person),
+        leading: const Icon(Icons.person),
         title: Text(
           studentName,
           style: const TextStyle(

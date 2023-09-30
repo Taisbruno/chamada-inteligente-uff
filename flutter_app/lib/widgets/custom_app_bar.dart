@@ -4,11 +4,13 @@ import 'package:flutter_app/screens/signup_screen.dart';
 import 'package:flutter_app/screens/login_screen.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
+  const CustomAppBar({super.key});
+
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
 
   @override
-  Size get preferredSize => Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(100);
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
@@ -36,7 +38,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       bottom: PreferredSize(
         preferredSize: widget.preferredSize,
         child: AnimatedContainer(
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           height: isMenuOpen ? 60 : 0,
           child: isMenuOpen
               ? Padding(
@@ -73,12 +75,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return ElevatedButton(
       onPressed: onPressed as void Function()?,
       style: ElevatedButton.styleFrom(
-        primary: Colors.purple[300],
-        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+        backgroundColor: Colors.purple[300],
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
       ),
       child: Text(
         text,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
       ),
     );
   }
