@@ -1,6 +1,6 @@
 # Projeto Chamada Inteligente 
 
-O projeto Chamada Inteligente trata-se de um sistema desenvolvido em disciplina de Gerência de Projeto de Software - UFF para gerenciamento de uma chamada/lista de presença que está sendo desenvolvido para fins de um requisito parcial de avaliação, assim como concorre para ser implementado na Superintendência de Tecnologia da Informação (STI/UFF). 
+O projeto Chamada Inteligente trata-se de um sistema desenvolvido na disciplina de Gerência de Projeto de Software - UFF para gerenciamento de uma chamada/lista de presença que está sendo desenvolvido para fins de um requisito parcial de avaliação, assim como concorre para ser implementado na Superintendência de Tecnologia da Informação (STI/UFF). 
 
 * **Objetivo do projeto**:
   Fomentar o aprendizado de novas arquiteturas, tecnologias e métodos de desenvolvimento de produtos digitais através da experimentação.
