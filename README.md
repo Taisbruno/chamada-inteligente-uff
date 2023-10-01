@@ -45,7 +45,11 @@ flutter run
 
 ## 3. Testes Unitários do Projeto
 
-
 ## 4. Links Importantes
 Repositório referente ao Backend do Projeto: https://github.com/Taisbruno/chamada-inteligente-uff-back
+
+Link do Github Issues do Projeto: https://github.com/users/Taisbruno/projects/1
+
+## 5. Imagem da EAP
+![Imagem](docs/images/eap.jpg)
 
