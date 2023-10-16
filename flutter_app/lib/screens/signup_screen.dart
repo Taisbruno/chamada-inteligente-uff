@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/SignUp/active_button.dart';
 import 'package:flutter_app/widgets/SignUp/signup_fields.dart';
 
-enum UserType { professor, student }
+import '../model/User.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -17,7 +17,7 @@ class _SignupPageState extends State<SignUpScreen> {
   TextEditingController passwordConfirmationController =
       TextEditingController();
 
-  UserType? _type = UserType.professor;
+  UserType? _type = UserType.teacher;
 
   @override
   Widget build(BuildContext context) {
@@ -93,12 +93,12 @@ class _SignupPageState extends State<SignUpScreen> {
           GestureDetector(
             onTap: () {
               setState(() {
-                _type = UserType.professor;
+                _type = UserType.teacher;
               });
             },
             child: ActiveButton(
                 type: _type,
-                expectedType: UserType.professor,
+                expectedType: UserType.teacher,
                 textContent: 'Sou professor'),
           )
         ],

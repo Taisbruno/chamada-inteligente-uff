@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/classes_screen.dart';
-import 'package:flutter_app/screens/signup_screen.dart';
 import 'package:flutter_app/widgets/input_field.dart';
+
+import '../../model/User.dart';
 
 class LogInFields extends StatelessWidget {
   final TextEditingController cpfController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final UserType? type;
+  final Future<void> Function(String cpf, String password, BuildContext context)
+      login;
 
-  LogInFields({super.key, required this.type});
+  LogInFields({super.key, required this.type, required this.login});
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +32,7 @@ class LogInFields extends StatelessWidget {
   Widget _loginBtn(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        debugPrint("Username : ${cpfController.text}");
-        debugPrint("Password : ${passwordController.text}");
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => ClassesScreen()));
+        login(cpfController.text, passwordController.text, context);
       },
       style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),

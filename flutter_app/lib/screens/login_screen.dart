@@ -1,7 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/signup_screen.dart';
+import 'package:flutter_app/services/login/login_service.dart';
 import 'package:flutter_app/widgets/LogIn/login_fields.dart';
 import 'package:flutter_app/widgets/SignUp/active_button.dart';
+import 'package:provider/provider.dart';
+
+import '../model/User.dart';
+import '../providers/UserProvider.dart';
+import 'classes_screen.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -16,7 +23,49 @@ class _LoginPageState extends State<LogInScreen> {
   TextEditingController passwordConfirmationController =
       TextEditingController();
 
-  UserType? _type = UserType.professor;
+  UserType? _type = UserType.teacher;
+  bool isLoading = false;
+
+  Future<void> login(String cpf, String password, BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final response = await authenticate(cpf, password);
+    await Future.delayed(Duration(milliseconds: 500));
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (response.statusCode == 200) {
+      final User user = User.fromJson(jsonDecode(response.body));
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.setUser(
+          name: user.name, email: user.email, cpf: user.cpf, type: user.type);
+
+      if (user.type == UserType.teacher) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ClassesScreen()));
+      } else {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ClassesScreen()));
+      }
+    } else {
+      _showToast(context);
+    }
+  }
+
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Erro ao realizar login: CPF ou senha incorretos'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +108,13 @@ class _LoginPageState extends State<LogInScreen> {
                 color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
-          LogInFields(type: _type),
+          LogInFields(type: _type, login: login),
           const SizedBox(height: 20),
+          if (isLoading)
+            const CircularProgressIndicator(
+              color: Colors.white,
+              backgroundColor: Colors.purple,
+            ),
           _extraText(),
         ],
       ),
@@ -92,12 +146,12 @@ class _LoginPageState extends State<LogInScreen> {
           GestureDetector(
             onTap: () {
               setState(() {
-                _type = UserType.professor;
+                _type = UserType.teacher;
               });
             },
             child: ActiveButton(
                 type: _type,
-                expectedType: UserType.professor,
+                expectedType: UserType.teacher,
                 textContent: 'Sou professor'),
           )
         ],
@@ -112,7 +166,10 @@ class _LoginPageState extends State<LogInScreen> {
         Text(
           "Não possui uma conta? Cadastre-se aqui.",
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 16, color: Colors.white),
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.white,
+          ),
         ),
       ],
     );
