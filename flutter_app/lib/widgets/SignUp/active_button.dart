@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/signup_screen.dart';
+import 'package:flutter_app/model/User.dart';
 
 class ActiveButton extends StatelessWidget {
   final UserType? type;
