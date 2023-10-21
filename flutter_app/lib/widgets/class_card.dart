@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/class_details_screen.dart';
-import 'ClassDetails/class_details.dart';
+import 'package:flutter_app/model/User.dart';
+import 'package:flutter_app/providers/UserProvider.dart';
+import 'package:flutter_app/screens/teacher_class_details_screen.dart';
+import 'package:provider/provider.dart';
 
 class ClassCard extends StatelessWidget {
   final String className;
@@ -8,7 +10,7 @@ class ClassCard extends StatelessWidget {
   final String semester;
   final Color color;
 
-  ClassCard({
+  const ClassCard({
     super.key,
     required this.className,
     required this.teacher,
@@ -35,15 +37,7 @@ class ClassCard extends StatelessWidget {
           onPressed: () {
             // Action when the "Join" button is pressed
             // Navigate to the class details page, which is ClassDetails widget in class_details.dart
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) => ClassDetailsScreen(
-                      className: className,
-                      teacher: teacher,
-                      semester: semester,
-                      description:
-                          'Matéria do curso de Sistemas de Informação')),
-            );
+            _handlePressDetails(context);
           },
           child: const Text('Detalhes'),
         ),
@@ -52,6 +46,30 @@ class ClassCard extends StatelessWidget {
           // You can add navigation to class details, for example.
         },
       ),
+    );
+  }
+
+  void _handlePressDetails(BuildContext context) {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    dynamic screen;
+
+    if (userProvider.type == UserType.teacher) {
+      screen = TeacherClassDetailsScreen(
+          className: className,
+          teacher: teacher,
+          semester: semester,
+          description: 'Matéria do curso de Sistemas de Informação');
+    } else {
+      screen = TeacherClassDetailsScreen(
+          className: className,
+          teacher: teacher,
+          semester: semester,
+          description: 'Matéria do curso de Sistemas de Informação');
+    }
+
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => screen),
     );
   }
 }
