@@ -47,8 +47,8 @@ class SignUpFields extends StatelessWidget {
       onPressed: () {
         debugPrint("Username : ${emailController.text}");
         debugPrint("Password : ${passwordController.text}");
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => ClassesScreen()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => TeacherClassesScreen()));
       },
       style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
