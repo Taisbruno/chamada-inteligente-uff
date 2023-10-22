@@ -1,19 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/ActiveCall/add_student.dart';
-import 'package:flutter_app/widgets/ActiveCall/end_call.dart';
-import 'package:flutter_app/widgets/ActiveCall/timer.dart';
-import 'package:flutter_app/widgets/ActiveCall/students_list.dart';
 import 'package:flutter_app/widgets/ClassDetails/class_details.dart';
 
-class ClassDetailsScreen extends StatefulWidget {
+class TeacherClassDetailsScreen extends StatefulWidget {
   final String className;
   final String teacher;
   final String semester;
   final String description;
 
-  const ClassDetailsScreen({
+  const TeacherClassDetailsScreen({
     super.key,
     required this.className,
     required this.teacher,
@@ -22,10 +16,10 @@ class ClassDetailsScreen extends StatefulWidget {
   });
 
   @override
-  State<ClassDetailsScreen> createState() => _ClassDetailsState();
+  State<TeacherClassDetailsScreen> createState() => _ClassDetailsState();
 }
 
-class _ClassDetailsState extends State<ClassDetailsScreen> {
+class _ClassDetailsState extends State<TeacherClassDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
