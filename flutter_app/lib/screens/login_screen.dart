@@ -20,8 +20,6 @@ class LogInScreen extends StatefulWidget {
 class _LoginPageState extends State<LogInScreen> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController passwordConfirmationController =
-      TextEditingController();
 
   UserType? _type = UserType.teacher;
   bool isLoading = false;
@@ -112,7 +110,8 @@ class _LoginPageState extends State<LogInScreen> {
                 color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
-          LogInFields(type: _type, login: login),
+          loginFields(
+              _type!, login, context, usernameController, passwordController),
           const SizedBox(height: 20),
           if (isLoading)
             const CircularProgressIndicator(
