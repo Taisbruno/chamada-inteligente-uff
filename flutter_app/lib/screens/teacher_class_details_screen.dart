@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/ClassDetails/class_details.dart';
 
 class TeacherClassDetailsScreen extends StatefulWidget {
+  final String classCode;
   final String className;
   final String teacher;
   final String semester;
@@ -9,6 +10,7 @@ class TeacherClassDetailsScreen extends StatefulWidget {
 
   const TeacherClassDetailsScreen({
     super.key,
+    required this.classCode,
     required this.className,
     required this.teacher,
     required this.semester,
@@ -41,92 +43,19 @@ class _ClassDetailsState extends State<TeacherClassDetailsScreen> {
           backgroundColor: Colors.transparent,
         ),
         backgroundColor: Colors.transparent,
-        body: _page(),
+        body: _page(context),
       ),
     );
   }
 
-  Widget _page() {
-    return ClassDetails(
+  Widget _page(BuildContext context) {
+    ClassDetailsData details = ClassDetailsData(
+        classCode: widget.classCode,
         className: widget.className,
         teacher: widget.teacher,
         semester: widget.semester,
-        description: widget.description,
-        students: students);
-  }
+        description: widget.description);
 
-  final List<Map<String, String>> students = [
-    {
-      "matricula": "123456",
-      "studentName": "John Doe",
-      "attendedClasses": "20",
-      "reproved": "Reprovado",
-    },
-    {
-      "matricula": "789012",
-      "studentName": "Jane Smith",
-      "attendedClasses": "22",
-      "reproved": "Pendente",
-    },
-    {
-      "matricula": "345678",
-      "studentName": "Alice Johnson",
-      "attendedClasses": "18",
-      "reproved": "Reprovado",
-    },
-    {
-      "matricula": "987654",
-      "studentName": "Carlos Silva",
-      "attendedClasses": "25",
-      "reproved": "Pendente",
-    },
-    {
-      "matricula": "654321",
-      "studentName": "Laura Martinez",
-      "attendedClasses": "17",
-      "reproved": "Reprovado",
-    },
-    {
-      "matricula": "567890",
-      "studentName": "David Perez",
-      "attendedClasses": "21",
-      "reproved": "Pendente",
-    },
-    {
-      "matricula": "112233",
-      "studentName": "Sophia Garcia",
-      "attendedClasses": "23",
-      "reproved": "Pendente",
-    },
-    {
-      "matricula": "445566",
-      "studentName": "Lucas Torres",
-      "attendedClasses": "19",
-      "reproved": "Reprovado",
-    },
-    {
-      "matricula": "998877",
-      "studentName": "Mia Hernandez",
-      "attendedClasses": "24",
-      "reproved": "Pendente",
-    },
-    {
-      "matricula": "112233",
-      "studentName": "Eduardo Gonzalez",
-      "attendedClasses": "20",
-      "reproved": "Reprovado",
-    },
-    {
-      "matricula": "334455",
-      "studentName": "Olivia Rodriguez",
-      "attendedClasses": "22",
-      "reproved": "Pendente",
-    },
-    {
-      "matricula": "667788",
-      "studentName": "Liam Miller",
-      "attendedClasses": "18",
-      "reproved": "Reprovado",
-    },
-  ];
+    return classDetails(details, context);
+  }
 }
