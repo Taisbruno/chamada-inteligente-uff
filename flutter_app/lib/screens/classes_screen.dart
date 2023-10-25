@@ -65,6 +65,7 @@ class _ClassesPageState extends State<TeacherClassesScreen> {
                     itemBuilder: (context, index) {
                       final classroom = snapshot.data![index];
                       return ClassCard(
+                          classCode: classroom.classCode,
                           className: classroom.discipline,
                           teacher: classroom.teacher,
                           semester: classroom.semester,

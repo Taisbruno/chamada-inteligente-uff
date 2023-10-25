@@ -5,6 +5,7 @@ import 'package:flutter_app/screens/teacher_class_details_screen.dart';
 import 'package:provider/provider.dart';
 
 class ClassCard extends StatelessWidget {
+  final String classCode;
   final String className;
   final String teacher;
   final String semester;
@@ -12,6 +13,7 @@ class ClassCard extends StatelessWidget {
 
   const ClassCard({
     super.key,
+    required this.classCode,
     required this.className,
     required this.teacher,
     required this.semester,
@@ -56,12 +58,14 @@ class ClassCard extends StatelessWidget {
 
     if (userProvider.type == UserType.teacher) {
       screen = TeacherClassDetailsScreen(
+          classCode: classCode,
           className: className,
           teacher: teacher,
           semester: semester,
           description: 'Matéria do curso de Sistemas de Informação');
     } else {
       screen = TeacherClassDetailsScreen(
+          classCode: classCode,
           className: className,
           teacher: teacher,
           semester: semester,
