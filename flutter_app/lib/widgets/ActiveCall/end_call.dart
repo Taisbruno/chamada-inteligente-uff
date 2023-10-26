@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/services/roll/roll_service.dart';
+import 'package:flutter_app/utils/Toast.dart';
 
-Widget endButton(BuildContext context) {
+Widget endButton(BuildContext context, String rollId) {
   return ElevatedButton(
     onPressed: () {
-      Navigator.of(context).pop();
+      finishRoll(rollId).then((response) {
+        if (response.statusCode == 200) {
+          Navigator.of(context).pop();
+        } else {
+          showToast(context, "Erro ao finalizar chamada", "OK");
+        }
+      });
     },
     style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),

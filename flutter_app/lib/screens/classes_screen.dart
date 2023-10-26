@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/classes/classes_service.dart';
-import 'package:flutter_app/widgets/class_card.dart';
+import 'package:flutter_app/widgets/Classes/class_card.dart';
 import 'package:provider/provider.dart';
 
 import '../model/Class.dart';

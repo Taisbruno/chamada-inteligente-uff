@@ -4,27 +4,29 @@ class InputField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final bool isPassword;
+  final Color color;
 
   const InputField({
     super.key,
     required this.hintText,
     required this.controller,
     this.isPassword = false,
+    this.color = Colors.white,
   });
 
   @override
   Widget build(BuildContext context) {
     var border = OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Colors.white));
+        borderSide: BorderSide(color: color));
 
     return TextField(
-      style: const TextStyle(color: Colors.white),
-      cursorColor: Colors.white,
+      style: TextStyle(color: color),
+      cursorColor: color,
       controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: const TextStyle(color: Colors.white),
+        hintStyle: TextStyle(color: color),
         enabledBorder: border,
         focusedBorder: border,
       ),
