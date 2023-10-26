@@ -7,7 +7,14 @@ import 'package:flutter_app/widgets/ActiveCall/timer.dart';
 import 'package:flutter_app/widgets/ActiveCall/students_list.dart';
 
 class ActiveCallScreen extends StatefulWidget {
-  const ActiveCallScreen({super.key});
+  final String classCode;
+  final String rollId;
+
+  const ActiveCallScreen({
+    super.key,
+    required this.classCode,
+    required this.rollId,
+  });
 
   @override
   State<ActiveCallScreen> createState() => _ActiveCallState();
@@ -84,7 +91,7 @@ class _ActiveCallState extends State<ActiveCallScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Essa chamada está ativa à",
+                    "Essa chamada está ativa há",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -93,7 +100,7 @@ class _ActiveCallState extends State<ActiveCallScreen> {
                   const SizedBox(height: 20),
                   buildTime(duration),
                   const SizedBox(height: 30),
-                  endButton(context),
+                  endButton(context, widget.rollId),
                   const SizedBox(height: 15),
                   addStudentButton(),
                   const SizedBox(height: 10),

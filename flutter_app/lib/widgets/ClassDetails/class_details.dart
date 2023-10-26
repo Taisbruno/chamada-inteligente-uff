@@ -3,6 +3,7 @@ import 'package:flutter_app/model/Student.dart';
 import 'package:flutter_app/screens/active_call_professor.dart';
 import 'package:flutter_app/services/classes/enrolled_students_service.dart';
 import 'package:flutter_app/widgets/ClassDetails/button.dart';
+import 'package:flutter_app/widgets/ClassDetails/dialog_start_roll.dart';
 import 'package:flutter_app/widgets/ClassDetails/student_card.dart';
 
 class ClassDetailsData {
@@ -23,6 +24,7 @@ class ClassDetailsData {
 }
 
 Widget classDetails(ClassDetailsData details, BuildContext context) {
+  TextEditingController endTimecontroller = TextEditingController();
   return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -56,8 +58,12 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             button(() {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const ActiveCallScreen()));
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => Dialog(
+                        child: dialogStartRoll(
+                            endTimecontroller, details.classCode, context),
+                      ));
             }, "Iniciar chamada", Colors.green),
             // button(() {
             //   print("Em desenvolvimento");
