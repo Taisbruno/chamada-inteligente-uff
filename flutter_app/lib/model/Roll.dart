@@ -5,6 +5,7 @@ class Roll {
   final String classCode;
   final String createdAt;
   final String finishedAt;
+  final bool isOpen;
 
   const Roll(
       {required this.rowId,
@@ -12,7 +13,8 @@ class Roll {
       required this.latitude,
       required this.classCode,
       required this.createdAt,
-      required this.finishedAt});
+      required this.finishedAt,
+      this.isOpen = false});
 
   factory Roll.fromJson(Map<String, dynamic> json) {
     return Roll(
@@ -21,6 +23,7 @@ class Roll {
         latitude: json['latitude'],
         classCode: json['classCode'],
         createdAt: json['createdAt'],
-        finishedAt: json['finishedAt']);
+        finishedAt: json['finishedAt'],
+        isOpen: json['isOpen']);
   }
 }

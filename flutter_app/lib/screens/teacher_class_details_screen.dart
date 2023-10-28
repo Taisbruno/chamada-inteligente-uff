@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/class_details.dart';
+import 'package:flutter_app/model/Roll.dart';
 
 class TeacherClassDetailsScreen extends StatefulWidget {
   final String classCode;
@@ -7,6 +8,7 @@ class TeacherClassDetailsScreen extends StatefulWidget {
   final String teacher;
   final String semester;
   final String description;
+  final List<Roll> rolls;
 
   const TeacherClassDetailsScreen({
     super.key,
@@ -15,6 +17,7 @@ class TeacherClassDetailsScreen extends StatefulWidget {
     required this.teacher,
     required this.semester,
     required this.description,
+    required this.rolls,
   });
 
   @override
@@ -54,7 +57,8 @@ class _ClassDetailsState extends State<TeacherClassDetailsScreen> {
         className: widget.className,
         teacher: widget.teacher,
         semester: widget.semester,
-        description: widget.description);
+        description: widget.description,
+        rolls: widget.rolls);
 
     return classDetails(details, context);
   }
