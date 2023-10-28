@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/User.dart';
 import 'package:flutter_app/providers/UserProvider.dart';
+import 'package:flutter_app/screens/student_class_details_screen.dart';
 import 'package:flutter_app/screens/teacher_class_details_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -64,7 +65,7 @@ class ClassCard extends StatelessWidget {
           semester: semester,
           description: 'Matéria do curso de Sistemas de Informação');
     } else {
-      screen = TeacherClassDetailsScreen(
+      screen = StudentClassDetailsScreen(
           classCode: classCode,
           className: className,
           teacher: teacher,
