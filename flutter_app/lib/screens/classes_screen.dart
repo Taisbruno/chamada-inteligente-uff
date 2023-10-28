@@ -1,47 +1,21 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/class_card.dart';
-import 'package:flutter_app/widgets/custom_app_bar.dart';
+import 'package:flutter_app/services/classes/classes_service.dart';
+import 'package:flutter_app/widgets/Classes/class_card.dart';
+import 'package:provider/provider.dart';
 
-class ClassesScreen extends StatelessWidget {
+import '../model/Class.dart';
+import '../providers/UserProvider.dart';
+
+class TeacherClassesScreen extends StatefulWidget {
+  const TeacherClassesScreen({super.key});
+
+  @override
+  State<TeacherClassesScreen> createState() => _ClassesPageState();
+}
+
+class _ClassesPageState extends State<TeacherClassesScreen> {
   final Random random = Random();
-  final List<Map<String, String>> classes = [
-    {
-      "className": "Sistemas Operacionais",
-      "teacher": "Professor Silva",
-      "semester": "2023.1",
-    },
-    {
-      "className": "Desenvolvimento Web",
-      "teacher": "Professor Silva",
-      "semester": "2023.1",
-    },
-    {
-      "className": "Programacao I",
-      "teacher": "Professor Lima",
-      "semester": "2022.2",
-    },
-    {
-      "className": "Estrutura de Dados",
-      "teacher": "Professor Pereira",
-      "semester": "2022.2",
-    },
-    {
-      "className": "Projeto de Software",
-      "teacher": "Professor José",
-      "semester": "2023.2",
-    },
-    {
-      "className": "Projeto de Aplicacao",
-      "teacher": "Professor Garcia",
-      "semester": "2023.2",
-    },
-    {
-      "className": "Gerência de Projetos de Hardware",
-      "teacher": "Professor Martu",
-      "semester": "2022.1",
-    },
-  ];
   final List<Color> cardColors = [
     Colors.blue[100]!,
     Colors.red[100]!,
@@ -53,10 +27,10 @@ class ClassesScreen extends StatelessWidget {
     Colors.teal[100]!,
   ];
 
-  ClassesScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
+
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -68,30 +42,54 @@ class ClassesScreen extends StatelessWidget {
         ],
       )),
       child: Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
-        appBar: AppBar(
-          foregroundColor: Colors.white,
-          title: const Text("Turmas",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          backgroundColor: Colors.transparent,
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: classes.length,
-                itemBuilder: (context, index) {
-                  return ClassCard(
-                    className: classes[index]['className']!,
-                    teacher: classes[index]['teacher']!,
-                    semester: classes[index]['semester']!,
-                    color: cardColors[random.nextInt(cardColors.length)],
-                  );
-                },
-              ),
-            ),
-          ],
+          backgroundColor: Theme.of(context).primaryColor,
+          appBar: AppBar(
+            foregroundColor: Colors.white,
+            title: const Text("Turmas",
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+            backgroundColor: Colors.transparent,
+          ),
+          body: FutureBuilder<List<Class>>(
+            future: getClassesByRegistration(user.registration!),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return _noClassesOrError(snapshot.error.toString());
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return _noClassesOrError(null);
+              } else {
+                return ListView.builder(
+                    itemCount: snapshot.data?.length,
+                    itemBuilder: (context, index) {
+                      final classroom = snapshot.data![index];
+                      return ClassCard(
+                          classCode: classroom.classCode,
+                          className: classroom.discipline,
+                          teacher: classroom.teacher,
+                          semester: classroom.semester,
+                          color: cardColors[random.nextInt(cardColors.length)]);
+                    });
+              }
+            },
+          )),
+    );
+  }
+
+  Widget _noClassesOrError(String? error) {
+    String text = error != null
+        ? 'Erro ao recuperar turmas: $error'
+        : 'Você não está cadastrado em nenhuma turma.';
+
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: const TextStyle(color: Colors.white, fontSize: 20.0),
+          textAlign: TextAlign.center,
         ),
       ),
     );

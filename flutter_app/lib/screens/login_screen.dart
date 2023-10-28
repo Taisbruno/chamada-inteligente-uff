@@ -20,8 +20,6 @@ class LogInScreen extends StatefulWidget {
 class _LoginPageState extends State<LogInScreen> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController passwordConfirmationController =
-      TextEditingController();
 
   UserType? _type = UserType.teacher;
   bool isLoading = false;
@@ -42,14 +40,18 @@ class _LoginPageState extends State<LogInScreen> {
       final User user = User.fromJson(jsonDecode(response.body));
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       userProvider.setUser(
-          name: user.name, email: user.email, cpf: user.cpf, type: user.type);
+          registration: user.registration,
+          name: user.name,
+          email: user.email,
+          cpf: user.cpf,
+          type: user.type);
 
       if (user.type == UserType.teacher) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => ClassesScreen()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => TeacherClassesScreen()));
       } else {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => ClassesScreen()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => TeacherClassesScreen()));
       }
     } else {
       _showToast(context);
@@ -108,7 +110,8 @@ class _LoginPageState extends State<LogInScreen> {
                 color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
-          LogInFields(type: _type, login: login),
+          loginFields(
+              _type!, login, context, usernameController, passwordController),
           const SizedBox(height: 20),
           if (isLoading)
             const CircularProgressIndicator(

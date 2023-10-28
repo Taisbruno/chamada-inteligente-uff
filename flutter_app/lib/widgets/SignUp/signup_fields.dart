@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/User.dart';
 import 'package:flutter_app/screens/classes_screen.dart';
-import 'package:flutter_app/widgets/input_field.dart';
+import 'package:flutter_app/widgets/shared/input_field.dart';
 
 class SignUpFields extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -47,8 +47,8 @@ class SignUpFields extends StatelessWidget {
       onPressed: () {
         debugPrint("Username : ${emailController.text}");
         debugPrint("Password : ${passwordController.text}");
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => ClassesScreen()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => TeacherClassesScreen()));
       },
       style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
