@@ -1,22 +1,27 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_app/services/login/login_service.dart';
-import 'package:flutter_app/widgets/LogIn/login_fields.dart';
-import 'package:flutter_app/widgets/SignUp/active_button.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_app/widgets/FinishedCall/finished_Call.dart';
 
-import '../model/User.dart';
-import '../providers/UserProvider.dart';
+class FinishedClassDetailsScreen extends StatefulWidget {
+  final String classCode;
+  final String className;
+  final String teacher;
+  final String semester;
+  final String description;
 
-class FinishedCallScreen extends StatefulWidget {
-  const FinishedCallScreen({super.key});
+  const FinishedClassDetailsScreen({
+    super.key,
+    required this.classCode,
+    required this.className,
+    required this.teacher,
+    required this.semester,
+    required this.description,
+  });
 
   @override
-  State<FinishedCallScreen> createState() => _FinishedCallPageState();
+  State<FinishedClassDetailsScreen> createState() => _ClassDetailsState();
 }
 
-class _FinishedCallPageState extends State<FinishedCallScreen> {
+class _ClassDetailsState extends State<FinishedClassDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,27 +37,25 @@ class _FinishedCallPageState extends State<FinishedCallScreen> {
       child: Scaffold(
         appBar: AppBar(
           foregroundColor: Colors.white,
-          title: const Text("Finished Call",
+          title: Text(widget.className,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           backgroundColor: Colors.transparent,
         ),
         backgroundColor: Colors.transparent,
-        body: _page(),
+        body: _page(context),
       ),
     );
   }
 
-  Widget _page() {
-    return const Column(
-      children: [
-        Row(
-          children: [
-            Card(),
-            Card(),
-          ],
-        ),
-      ],
-    );
+  Widget _page(BuildContext context) {
+    FinishedCallData details = FinishedCallData(
+        classCode: widget.classCode,
+        className: widget.className,
+        teacher: widget.teacher,
+        semester: widget.semester,
+        description: widget.description);
+
+    return finishedCall(details, context);
   }
 }
