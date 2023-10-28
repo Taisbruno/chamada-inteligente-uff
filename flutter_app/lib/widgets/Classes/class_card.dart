@@ -13,6 +13,7 @@ class ClassCard extends StatelessWidget {
   final String semester;
   final Color color;
   final List<Roll> rolls;
+  final Function(dynamic) onGoBack;
 
   const ClassCard({
     super.key,
@@ -21,6 +22,7 @@ class ClassCard extends StatelessWidget {
     required this.teacher,
     required this.semester,
     required this.color,
+    required this.onGoBack,
     this.rolls = const [],
   });
 
@@ -55,7 +57,7 @@ class ClassCard extends StatelessWidget {
             onPressed: () {
               // Action when the "Join" button is pressed
               // Navigate to the class details page, which is ClassDetails widget in class_details.dart
-              _handlePressDetails(context);
+              _handlePressDetails(context, onGoBack);
             },
             child: const Text('Detalhes'),
           )
@@ -68,7 +70,7 @@ class ClassCard extends StatelessWidget {
     );
   }
 
-  void _handlePressDetails(BuildContext context) {
+  void _handlePressDetails(BuildContext context, Function(dynamic) onGoBack) {
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);
     dynamic screen;
@@ -91,9 +93,11 @@ class ClassCard extends StatelessWidget {
       );
     }
 
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => screen),
-    );
+    Navigator.of(context)
+        .push(
+          MaterialPageRoute(builder: (context) => screen),
+        )
+        .then(onGoBack);
   }
 
   Widget _getSubtitleText(bool isRollActive) {

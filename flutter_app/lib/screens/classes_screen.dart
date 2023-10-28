@@ -8,14 +8,14 @@ import 'package:provider/provider.dart';
 import '../model/Class.dart';
 import '../providers/UserProvider.dart';
 
-class TeacherClassesScreen extends StatefulWidget {
-  const TeacherClassesScreen({super.key});
+class ClassesScreen extends StatefulWidget {
+  const ClassesScreen({super.key});
 
   @override
-  State<TeacherClassesScreen> createState() => _ClassesPageState();
+  State<ClassesScreen> createState() => _ClassesPageState();
 }
 
-class _ClassesPageState extends State<TeacherClassesScreen> {
+class _ClassesPageState extends State<ClassesScreen> {
   final Random random = Random();
   final List<Color> cardColors = [
     Colors.blue[100]!,
@@ -84,6 +84,7 @@ class _ClassesPageState extends State<TeacherClassesScreen> {
                           teacher: classroom.teacher,
                           semester: classroom.semester,
                           rolls: classroom.rolls,
+                          onGoBack: onGoBack,
                           color: cardColors[random.nextInt(cardColors.length)]);
                     });
               }
@@ -108,5 +109,9 @@ class _ClassesPageState extends State<TeacherClassesScreen> {
         ),
       ),
     );
+  }
+
+  onGoBack(dynamic) {
+    this.setState(() {});
   }
 }

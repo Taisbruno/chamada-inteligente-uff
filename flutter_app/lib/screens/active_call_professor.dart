@@ -77,6 +77,12 @@ class _ActiveCallState extends State<ActiveCallScreen> {
       )),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.of(context).popUntil(ModalRoute.withName("/classes"));
+            },
+          ),
           foregroundColor: Colors.white,
           title: const Text("Chamada Ativa",
               style:
