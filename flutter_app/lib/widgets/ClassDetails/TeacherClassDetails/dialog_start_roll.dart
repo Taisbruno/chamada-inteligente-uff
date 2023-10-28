@@ -9,7 +9,7 @@ import 'package:flutter_app/widgets/ClassDetails/button.dart';
 import 'package:flutter_app/widgets/shared/timer_field.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../utils/Toast.dart';
+import '../../../utils/Toast.dart';
 
 Widget dialogStartRoll(TextEditingController endTimeController,
     String classCode, BuildContext context) {
