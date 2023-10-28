@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/class_details.dart';
+import 'package:flutter_app/widgets/ClassDetails/StudentClassDetails/dialog_student_statics.dart';
+import 'package:flutter_app/widgets/ClassDetails/StudentClassDetails/student_class_details.dart';
 
-class TeacherClassDetailsScreen extends StatefulWidget {
+class StudentClassDetailsScreen extends StatefulWidget {
   final String classCode;
   final String className;
   final String teacher;
   final String semester;
   final String description;
 
-  const TeacherClassDetailsScreen({
+  const StudentClassDetailsScreen({
     super.key,
     required this.classCode,
     required this.className,
@@ -18,10 +19,10 @@ class TeacherClassDetailsScreen extends StatefulWidget {
   });
 
   @override
-  State<TeacherClassDetailsScreen> createState() => _ClassDetailsState();
+  State<StudentClassDetailsScreen> createState() => _StudentDetailsState();
 }
 
-class _ClassDetailsState extends State<TeacherClassDetailsScreen> {
+class _StudentDetailsState extends State<StudentClassDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,6 +37,17 @@ class _ClassDetailsState extends State<TeacherClassDetailsScreen> {
       )),
       child: Scaffold(
         appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.local_pizza),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => Dialog(
+                        child: dialogSudentStatics(context),
+                ));
+              },
+            )],
           foregroundColor: Colors.white,
           title: Text(widget.className,
               style:
@@ -56,6 +68,6 @@ class _ClassDetailsState extends State<TeacherClassDetailsScreen> {
         semester: widget.semester,
         description: widget.description);
 
-    return classDetails(details, context);
+    return studentClassDetails(details, context);
   }
 }
