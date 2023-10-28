@@ -44,6 +44,15 @@ class _FinishedCallPageState extends State<FinishedCallScreen> {
   }
 
   Widget _page() {
-    return SingleChildScrollView();
+    return const Column(
+      children: [
+        Row(
+          children: [
+            Card(),
+            Card(),
+          ],
+        ),
+      ],
+    );
   }
 }
