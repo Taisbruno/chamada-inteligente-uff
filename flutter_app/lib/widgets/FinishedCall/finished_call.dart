@@ -3,101 +3,59 @@ import 'package:flutter_app/model/Student.dart';
 import 'package:flutter_app/screens/active_call_professor.dart';
 import 'package:flutter_app/services/classes/enrolled_students_service.dart';
 import 'package:flutter_app/widgets/ClassDetails/button.dart';
-import 'package:flutter_app/widgets/ClassDetails/dialog_start_roll.dart';
-import 'package:flutter_app/widgets/ClassDetails/student_card.dart';
+import 'package:flutter_app/widgets/FinishedCall/dialog_finished_call.dart';
+import 'package:flutter_app/widgets/FinishedCall/finished_call.dart';
 
-class ClassDetailsData {
-  String classCode;
-  String className;
-  String teacher;
-  String semester;
-  String description;
-  late List<Student> students;
+class ClassDetailsData {}
 
-  ClassDetailsData(
-      {required this.classCode,
-      required this.className,
-      required this.teacher,
-      required this.semester,
-      required this.description,
-      this.students = const []});
-}
-
-Widget classDetails(ClassDetailsData details, BuildContext context) {
+Widget finishedCall() {
   TextEditingController endTimecontroller = TextEditingController();
   return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Text(
-          'Detalhes da Turma:',
+          'Número de alunos presente: ',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
         ),
-        const SizedBox(height: 8),
-        Text(
-          'Professor: ${details.teacher}',
-          style: const TextStyle(color: Colors.white),
-        ),
-        Text('Semestre: ${details.semester}',
-            style: const TextStyle(color: Colors.white)),
         const SizedBox(height: 16),
         const Text(
-          'Descrição da matéria',
+          'Média de Tempo dos alunos: ',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
         ),
-        Text(details.description, style: const TextStyle(color: Colors.white)),
         const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            button(() {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => Dialog(
-                        child: dialogStartRoll(
-                            endTimecontroller, details.classCode, context),
-                      ));
-            }, "Iniciar chamada", Colors.green),
-            // button(() {
-            //   print("Em desenvolvimento");
-            // }, "Agendar Chamada", Colors.transparent),
-            button(() {
-              print("Em desenvolvimento");
-            }, "Acessar histórico", Colors.transparent),
-          ],
-        ),
-        const SizedBox(height: 20),
-        FutureBuilder(
-          future: getStudentsByClass(details.classCode),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Student>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            }
-            if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return _noStudents();
-            } else {
-              return studentsList(snapshot.data!);
-            }
-          },
-        )
+        studentsList(),
+        // FutureBuilder(
+        //   future: getStudentsByClass(details.classCode),
+        //   builder:
+        //       (BuildContext context, AsyncSnapshot<List<Student>> snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.waiting) {
+        //       return const CircularProgressIndicator();
+        //     }
+        //     if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        //       return _noStudents();
+        //     } else {
+        //       return studentsList(snapshot.data!);
+        //     }
+        //   },
+        // )
       ]));
 }
 
-Widget studentsList(List<Student> snapshot) {
+Widget studentsList() {
   return Expanded(
       child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
-        'Alunos Inscritos (${snapshot.length}):',
+        'Alunos Inscritos (5):',
         style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -106,9 +64,9 @@ Widget studentsList(List<Student> snapshot) {
       ),
       Expanded(
         child: ListView.builder(
-          itemCount: snapshot.length,
+          itemCount: 5,
           itemBuilder: (context, index) {
-            return studentCard(StudentCardData(
+            return finishedCallCard(StudentCardData(
                 studentName: snapshot[index].name,
                 matricula: snapshot[index].registration));
           },
