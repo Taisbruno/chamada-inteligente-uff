@@ -1,3 +1,5 @@
+import 'package:flutter_app/model/Roll.dart';
+
 class Class {
   final String classCode;
   final String disciplineCode;
@@ -5,6 +7,7 @@ class Class {
   final String teacher;
   final String semester;
   final int totalClassDays;
+  final List<Roll> rolls;
 
   const Class(
       {required this.classCode,
@@ -12,7 +15,8 @@ class Class {
       required this.discipline,
       required this.teacher,
       required this.semester,
-      required this.totalClassDays});
+      required this.totalClassDays,
+      this.rolls = const []});
 
   factory Class.fromJson(Map<String, dynamic> json) {
     return Class(
@@ -21,6 +25,16 @@ class Class {
         discipline: json['discipline'],
         teacher: json['teacher'],
         semester: json['semester'],
-        totalClassDays: json['total']);
+        totalClassDays: json['total'],
+        rolls: List.from(json['rolls'])
+            .map((roll) => Roll(
+                rowId: roll['id'],
+                longitude: roll['longitude'],
+                latitude: roll['latitude'],
+                classCode: roll['classCode'],
+                createdAt: roll['createdAt'],
+                finishedAt: roll['finishedAt'],
+                isOpen: roll['isOpen']))
+            .toList());
   }
 }

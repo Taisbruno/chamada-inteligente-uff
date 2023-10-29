@@ -7,7 +7,7 @@ Widget endButton(BuildContext context, String rollId) {
     onPressed: () {
       finishRoll(rollId).then((response) {
         if (response.statusCode == 200) {
-          Navigator.of(context).pop();
+          Navigator.of(context).popUntil(ModalRoute.withName("/classes"));
         } else {
           showToast(context, "Erro ao finalizar chamada", "OK");
         }

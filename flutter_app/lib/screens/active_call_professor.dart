@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/Roll.dart';
 import 'package:flutter_app/widgets/ActiveCall/add_student.dart';
 import 'package:flutter_app/widgets/ActiveCall/end_call.dart';
 import 'package:flutter_app/widgets/ActiveCall/timer.dart';
@@ -8,12 +9,14 @@ import 'package:flutter_app/widgets/ActiveCall/students_list.dart';
 
 class ActiveCallScreen extends StatefulWidget {
   final String classCode;
-  final String rollId;
+  final Roll roll;
+  final bool isAlreadyOpen;
 
   const ActiveCallScreen({
     super.key,
     required this.classCode,
-    required this.rollId,
+    required this.roll,
+    this.isAlreadyOpen = false,
   });
 
   @override
@@ -47,6 +50,12 @@ class _ActiveCallState extends State<ActiveCallScreen> {
   }
 
   void startTimer() {
+    if (widget.isAlreadyOpen) {
+      DateTime createdDate = DateTime.parse(widget.roll.createdAt);
+      duration =
+          Duration(seconds: DateTime.now().difference(createdDate).inSeconds);
+    }
+
     timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
   }
 
@@ -68,6 +77,12 @@ class _ActiveCallState extends State<ActiveCallScreen> {
       )),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.of(context).popUntil(ModalRoute.withName("/classes"));
+            },
+          ),
           foregroundColor: Colors.white,
           title: const Text("Chamada Ativa",
               style:
@@ -100,7 +115,7 @@ class _ActiveCallState extends State<ActiveCallScreen> {
                   const SizedBox(height: 20),
                   buildTime(duration),
                   const SizedBox(height: 30),
-                  endButton(context, widget.rollId),
+                  endButton(context, widget.roll.rowId),
                   const SizedBox(height: 15),
                   addStudentButton(),
                   const SizedBox(height: 10),

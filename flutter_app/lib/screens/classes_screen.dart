@@ -2,19 +2,20 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/classes/classes_service.dart';
 import 'package:flutter_app/widgets/Classes/class_card.dart';
+import 'package:flutter_app/widgets/Classes/dialog_user.dart';
 import 'package:provider/provider.dart';
 
 import '../model/Class.dart';
 import '../providers/UserProvider.dart';
 
-class TeacherClassesScreen extends StatefulWidget {
-  const TeacherClassesScreen({super.key});
+class ClassesScreen extends StatefulWidget {
+  const ClassesScreen({super.key});
 
   @override
-  State<TeacherClassesScreen> createState() => _ClassesPageState();
+  State<ClassesScreen> createState() => _ClassesPageState();
 }
 
-class _ClassesPageState extends State<TeacherClassesScreen> {
+class _ClassesPageState extends State<ClassesScreen> {
   final Random random = Random();
   final List<Color> cardColors = [
     Colors.blue[100]!,
@@ -49,6 +50,19 @@ class _ClassesPageState extends State<TeacherClassesScreen> {
                 style: TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold)),
             backgroundColor: Colors.transparent,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => Dialog(
+                            child: dialogUser(context),
+                          ));
+                },
+                icon: const Icon(Icons.person_outline_outlined),
+                iconSize: 28,
+              )
+            ],
           ),
           body: FutureBuilder<List<Class>>(
             future: getClassesByRegistration(user.registration!),
@@ -69,6 +83,8 @@ class _ClassesPageState extends State<TeacherClassesScreen> {
                           className: classroom.discipline,
                           teacher: classroom.teacher,
                           semester: classroom.semester,
+                          rolls: classroom.rolls,
+                          onGoBack: onGoBack,
                           color: cardColors[random.nextInt(cardColors.length)]);
                     });
               }
@@ -93,5 +109,9 @@ class _ClassesPageState extends State<TeacherClassesScreen> {
         ),
       ),
     );
+  }
+
+  onGoBack(dynamic) {
+    this.setState(() {});
   }
 }
