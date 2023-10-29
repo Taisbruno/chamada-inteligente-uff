@@ -46,13 +46,7 @@ class _LoginPageState extends State<LogInScreen> {
           cpf: user.cpf,
           type: user.type);
 
-      if (user.type == UserType.teacher) {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => TeacherClassesScreen()));
-      } else {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => TeacherClassesScreen()));
-      }
+      Navigator.of(context).pushNamed('/classes');
     } else {
       _showToast(context);
     }

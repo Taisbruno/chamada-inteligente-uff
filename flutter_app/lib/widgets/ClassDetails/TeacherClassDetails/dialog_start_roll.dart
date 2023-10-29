@@ -79,7 +79,7 @@ void handleSuccess(
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ActiveCallScreen(
                 classCode: roll.classCode,
-                rollId: roll.rowId,
+                roll: roll,
               )));
     } else {
       showToast(context, "Não foi possível criar uma nova chamada", "Entendi");

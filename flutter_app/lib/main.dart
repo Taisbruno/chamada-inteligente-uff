@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/UserProvider.dart';
+import 'package:flutter_app/screens/classes_screen.dart';
 import 'package:flutter_app/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LogInScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const LogInScreen(),
+        '/classes': (context) => const ClassesScreen(),
+      },
     );
   }
 }
