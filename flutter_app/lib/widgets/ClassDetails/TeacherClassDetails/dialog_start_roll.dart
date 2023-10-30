@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/model/Roll.dart';
 import 'package:flutter_app/screens/active_call_professor.dart';
 import 'package:flutter_app/services/roll/roll_service.dart';
-import 'package:flutter_app/utils/Geolocator.dart';
+import 'package:flutter_app/utils/geolocation/Geolocator.dart';
 import 'package:flutter_app/widgets/ClassDetails/button.dart';
 import 'package:flutter_app/widgets/shared/timer_field.dart';
 import 'package:geolocator/geolocator.dart';
@@ -49,12 +49,15 @@ Widget dialogStartRoll(TextEditingController endTimeController,
         const SizedBox(
           height: 30,
         ),
-        button(() async {
-          determinePosition()
-              .then((value) => handleSuccess(context, value, classCode))
-              .onError((error, stackTrace) =>
-                  handleError(context, error.toString()));
-        }, "Confirmar", Theme.of(context).primaryColor),
+        button(
+            onPressed: () async {
+              determinePosition()
+                  .then((value) => handleSuccess(context, value, classCode))
+                  .onError((error, stackTrace) =>
+                      handleError(context, error.toString()));
+            },
+            title: "Confirmar",
+            color: Theme.of(context).primaryColor),
         TextButton(
             onPressed: () {
               Navigator.of(context).pop();

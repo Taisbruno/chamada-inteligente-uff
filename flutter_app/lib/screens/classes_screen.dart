@@ -19,7 +19,6 @@ class _ClassesPageState extends State<ClassesScreen> {
   final Random random = Random();
   final List<Color> cardColors = [
     Colors.blue[100]!,
-    Colors.red[100]!,
     Colors.green[100]!,
     Colors.orange[100]!,
     Colors.purple[100]!,

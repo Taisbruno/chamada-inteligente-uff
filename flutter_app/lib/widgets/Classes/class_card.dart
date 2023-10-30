@@ -90,6 +90,7 @@ class ClassCard extends StatelessWidget {
         teacher: teacher,
         semester: semester,
         description: 'Matéria do curso de Sistemas de Informação',
+        roll: rolls.where((element) => element.isOpen).firstOrNull,
       );
     }
 
