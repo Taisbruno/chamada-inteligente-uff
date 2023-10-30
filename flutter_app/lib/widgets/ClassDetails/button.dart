@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 
-Widget button(Function onPressed, String title, Color color) {
+Widget button(
+    {required onPressed,
+    required String title,
+    required Color color,
+    bool disabled = false}) {
   return ElevatedButton(
-    onPressed: () {
-      onPressed();
-    },
+    onPressed: disabled
+        ? null
+        : () {
+            onPressed();
+          },
     style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
         backgroundColor: color,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        disabledBackgroundColor: Colors.white12),
     child: Text(
       title,
-      style: const TextStyle(
-          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+      style: TextStyle(
+          color: disabled ? Colors.black38 : Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 14),
     ),
   );
 }
