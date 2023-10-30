@@ -5,6 +5,7 @@ import 'package:flutter_app/services/classes/enrolled_students_service.dart';
 import 'package:flutter_app/widgets/ClassDetails/button.dart';
 import 'package:flutter_app/widgets/FinishedCall/dialog_finished_call.dart';
 import 'package:flutter_app/widgets/FinishedCall/finished_call.dart';
+import 'package:flutter_app/widgets/FinishedCall/finished_call_student_card.dart';
 
 class ClassDetailsData {}
 
@@ -66,9 +67,8 @@ Widget studentsList() {
         child: ListView.builder(
           itemCount: 5,
           itemBuilder: (context, index) {
-            return finishedCallCard(StudentCardData(
-                studentName: snapshot[index].name,
-                matricula: snapshot[index].registration));
+            return finishedCallStudentCard(FinishedCallStudentCardData(
+                studentName: "Tais", matricula: "1234"));
           },
         ),
       )

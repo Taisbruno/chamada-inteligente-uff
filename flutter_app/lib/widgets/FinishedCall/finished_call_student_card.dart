@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
-class StudentCardData {
+class FinishedCallStudentCardData {
   final String studentName;
   final String matricula;
+  final String presente;
   final int attendedClasses;
   final bool reproved;
 
-  StudentCardData(
+  FinishedCallStudentCardData(
       {required this.studentName,
       required this.matricula,
+      this.presente = "Sim",
       this.attendedClasses = 10,
       this.reproved = false});
 }
 
-Widget studentCard(StudentCardData data) {
+Widget finishedCallStudentCard(FinishedCallStudentCardData data) {
   const String numberOfClasses = "100";
 
   return Card(
@@ -32,9 +34,14 @@ Widget studentCard(StudentCardData data) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Matrícula: ${data.matricula}'),
-          Text('Aulas comparecidas: ${data.attendedClasses}/$numberOfClasses'),
-          Text('Reprovado por falta: ${data.reproved ? 'Sim' : 'Não'}'),
+          Text('Presente: ${data.presente}'),
         ],
+      ),
+      trailing: ElevatedButton(
+        onPressed: () {
+          //logica para anexar atestado, verificar se o botão deve aparaecer ou nao. O botão deve aparecer se o aluno faltou
+        },
+        child: const Text('Visualizar \nAtestado'),
       ),
     ),
   );
