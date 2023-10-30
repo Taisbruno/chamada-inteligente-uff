@@ -69,10 +69,13 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
             // button(() {
             //   print("Em desenvolvimento");
             // }, "Agendar Chamada", Colors.transparent),
-            button(() {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => FinishedClassDetailsScreen()));
-            }, "Acessar histórico", Colors.transparent),
+            button(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => FinishedClassDetailsScreen()));
+                },
+                title: "Acessar histórico",
+                color: Colors.transparent),
           ],
         ),
         const SizedBox(height: 20),
@@ -96,19 +99,25 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
 Widget getFirstButton(Roll? openRoll, BuildContext context,
     TextEditingController controller, String classCode) {
   if (openRoll == null) {
-    return button(() {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) => Dialog(
-                child: dialogStartRoll(controller, classCode, context),
-              ));
-    }, "Iniciar chamada", Colors.green);
+    return button(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => Dialog(
+                    child: dialogStartRoll(controller, classCode, context),
+                  ));
+        },
+        title: "Iniciar chamada",
+        color: Colors.green);
   } else {
-    return button(() {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ActiveCallScreen(
-              classCode: classCode, roll: openRoll, isAlreadyOpen: true)));
-    }, "Ver chamada", Colors.green);
+    return button(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ActiveCallScreen(
+                  classCode: classCode, roll: openRoll, isAlreadyOpen: true)));
+        },
+        title: "Ver chamada",
+        color: Colors.green);
   }
 }
 
