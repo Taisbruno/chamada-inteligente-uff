@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 import '../model/User.dart';
 import '../providers/UserProvider.dart';
-import 'classes_screen.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});

@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/Roll.dart';
+import 'package:flutter_app/model/Student.dart';
+import 'package:flutter_app/services/roll/presence/presence_service.dart';
+import 'package:flutter_app/services/roll/presence/websocket_service.dart';
 import 'package:flutter_app/widgets/ActiveCall/add_student.dart';
 import 'package:flutter_app/widgets/ActiveCall/end_call.dart';
 import 'package:flutter_app/widgets/ActiveCall/timer.dart';
@@ -27,16 +30,25 @@ class _ActiveCallState extends State<ActiveCallScreen> {
   Duration duration = const Duration();
   Timer? timer;
 
+  WebsocketService? websocketService;
+  List<Student> students = [];
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
     startTimer();
+    fetchPresences();
+    connectWebsocket();
   }
 
   @override
   void dispose() {
     super.dispose();
     stopTimer();
+    if (websocketService != null) {
+      websocketService!.deactivateClient();
+    }
   }
 
   void addTime() {
@@ -63,6 +75,27 @@ class _ActiveCallState extends State<ActiveCallScreen> {
     timer?.cancel();
   }
 
+  void fetchPresences() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    List<Student> studentsPresent = await getPresenceByRoll(widget.roll.rowId);
+
+    setState(() {
+      isLoading = false;
+      students = studentsPresent;
+    });
+  }
+
+  void connectWebsocket() {
+    if (websocketService == null) {
+      websocketService = WebsocketService(
+          updatePresences: updateList, rollId: widget.roll.rowId);
+      websocketService!.initClient();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -83,6 +116,13 @@ class _ActiveCallState extends State<ActiveCallScreen> {
               Navigator.of(context).popUntil(ModalRoute.withName("/classes"));
             },
           ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  fetchPresences();
+                },
+                icon: const Icon(Icons.refresh))
+          ],
           foregroundColor: Colors.white,
           title: const Text("Chamada Ativa",
               style:
@@ -117,7 +157,8 @@ class _ActiveCallState extends State<ActiveCallScreen> {
                   const SizedBox(height: 30),
                   endButton(context, widget.roll.rowId),
                   const SizedBox(height: 15),
-                  addStudentButton(),
+                  addStudentButton(
+                      context, widget.classCode, widget.roll.rowId),
                   const SizedBox(height: 10),
                 ],
               ),
@@ -126,14 +167,6 @@ class _ActiveCallState extends State<ActiveCallScreen> {
       ],
     ));
   }
-
-  final List<Student> userList = [
-    Student(id: 1, name: 'João Marcos'),
-    Student(id: 2, name: 'Gabriel Silva'),
-    Student(id: 3, name: 'José Oliveira'),
-    Student(id: 4, name: 'Lucas Ferreira'),
-    Student(id: 5, name: 'Pedro Neves'),
-  ];
 
   Widget _container_alunos() {
     return Padding(
@@ -144,8 +177,21 @@ class _ActiveCallState extends State<ActiveCallScreen> {
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 14),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(20)),
-        child: studentsList(userList),
+        child: studentsList(context, students, updateList),
       ),
     );
+  }
+
+  updateList(List<Student> currentStudents) {
+    setState(() {
+      students = currentStudents;
+    });
+  }
+
+  addPresence(List<Student> currentStudents) {
+    students.addAll(currentStudents);
+    setState(() {
+      students = students.toSet().toList();
+    });
   }
 }
