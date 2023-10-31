@@ -8,6 +8,8 @@ import 'package:flutter_app/widgets/ClassDetails/button.dart';
 import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/dialog_start_roll.dart';
 import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/student_card.dart';
 
+import '../../../screens/class_roll_historic_screen.dart';
+
 class ClassDetailsData {
   String classCode;
   String className;
@@ -66,18 +68,23 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
           children: [
             getFirstButton(
                 openRoll, context, endTimecontroller, details.classCode),
-            // button(() {
-            //   print("Em desenvolvimento");
-            // }, "Agendar Chamada", Colors.transparent),
             button(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => FinishedClassDetailsScreen()));
                 },
-                title: "Acessar histórico",
+                title: "Acessar chamada atual",
+                color: Colors.transparent),
+            button(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ClassRollHistoricScreen()));
+                },
+                title: "Histórico de Chamadas",
                 color: Colors.transparent),
           ],
         ),
+        const SizedBox(height: 20),
         const SizedBox(height: 20),
         FutureBuilder(
           future: getStudentsByClass(details.classCode),
@@ -95,6 +102,7 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
         )
       ]));
 }
+
 
 Widget getFirstButton(Roll? openRoll, BuildContext context,
     TextEditingController controller, String classCode) {
