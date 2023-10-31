@@ -20,7 +20,7 @@ Future<http.Response> createRoll(
 }
 
 Future<http.Response> finishRoll(String rollId) async {
-  final response = await http.put(
+  final response = await http.patch(
       Uri.parse("$baseApiUrl/roll/close-roll?callId=$rollId"),
       headers: requestHeaders);
 

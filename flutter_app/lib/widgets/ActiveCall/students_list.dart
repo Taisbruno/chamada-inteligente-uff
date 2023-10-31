@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/Student.dart';
+import 'package:flutter_app/widgets/ActiveCall/dialog_remove_student.dart';
 
-class Student {
-  final int id;
-  final String name;
-
-  Student({required this.id, required this.name});
-}
-
-Widget studentsList(List<Student> studentList) {
+Widget studentsList(BuildContext context, List<Student> studentList,
+    Function(List<Student>) updateList) {
   return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-    const Text(
-      "Total de alunos presentes: 5",
-      style: TextStyle(
+    Text(
+      "Total de alunos presentes: ${studentList.length}",
+      style: const TextStyle(
           fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
     ),
     const Divider(height: 16, thickness: 1, color: Colors.black),
-    for (var student in studentList) studentTile(student)
+    for (var student in studentList)
+      studentTile(context, student, studentList, updateList)
   ]);
 }
 
-Widget studentTile(Student student) {
+Widget studentTile(BuildContext context, student, List<Student> allPresents,
+    Function(List<Student>) updateList) {
   return ListTile(
     leading: const Icon(Icons.person),
     title: Text(student.name),
@@ -29,7 +27,11 @@ Widget studentTile(Student student) {
         color: Colors.red,
       ),
       onPressed: () {
-        // Insert here the code to remove the student
+        showDialog(
+            context: context,
+            builder: (context) => Dialog(
+                child: dialogRemoveStudent(
+                    context, student, allPresents, updateList)));
       },
     ),
   );
