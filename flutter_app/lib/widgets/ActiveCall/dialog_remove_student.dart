@@ -1,9 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_app/model/Student.dart';
-import 'package:flutter_app/widgets/ClassDetails/button.dart';
+// ignore_for_file: use_build_context_synchronously
 
-Widget dialogRemoveStudent(BuildContext context, Student student,
-    List<Student> allPresents, Function(List<Student>) updateList) {
+import 'package:flutter/material.dart';
+import 'package:flutter_app/model/Presence.dart';
+import 'package:flutter_app/services/roll/presence/presence_service.dart';
+import 'package:flutter_app/utils/Toast.dart';
+import 'package:flutter_app/widgets/ClassDetails/button.dart';
+import 'package:http/http.dart';
+
+Widget dialogRemoveStudent(BuildContext context, Presence student,
+    List<Presence> allPresents, Function(List<Presence>) updateList) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
     child: Column(
@@ -29,7 +34,7 @@ Widget dialogRemoveStudent(BuildContext context, Student student,
         ),
         const SizedBox(height: 25),
         Text(
-          student.name,
+          student.studentName,
           style: const TextStyle(
             color: Colors.black87,
             fontWeight: FontWeight.w600,
@@ -38,7 +43,7 @@ Widget dialogRemoveStudent(BuildContext context, Student student,
         ),
         const SizedBox(height: 5),
         Text(
-          'Matrícula: ${student.registration!}',
+          'Matrícula: ${student.studentRegistration!}',
           style: const TextStyle(
             color: Colors.black87,
             fontSize: 14,
@@ -49,10 +54,18 @@ Widget dialogRemoveStudent(BuildContext context, Student student,
           height: 25,
         ),
         button(
-            onPressed: () {
-              allPresents.removeWhere(
-                  (element) => element.registration == student.registration);
-              updateList(allPresents);
+            onPressed: () async {
+              Response response = await invalidatePresence(student.presenceId);
+
+              if (response.statusCode == 200) {
+                allPresents.removeWhere((element) =>
+                    element.studentRegistration == student.studentRegistration);
+                updateList(allPresents);
+                showToast(context, "Presença invalidada", "OK");
+              } else {
+                showToast(context,
+                    "Não foi possível invalidar a presença do aluno", "OK");
+              }
               Navigator.of(context).pop();
             },
             title: "Remover aluno",

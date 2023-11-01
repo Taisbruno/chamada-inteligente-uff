@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/model/Student.dart';
+import 'package:flutter_app/model/Presence.dart';
 import 'package:flutter_app/widgets/ActiveCall/dialog_remove_student.dart';
 
-Widget studentsList(BuildContext context, List<Student> studentList,
-    Function(List<Student>) updateList) {
+Widget studentsList(BuildContext context, List<Presence> studentList,
+    Function(List<Presence>) updateList) {
   return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
     Text(
       "Total de alunos presentes: ${studentList.length}",
@@ -16,11 +16,11 @@ Widget studentsList(BuildContext context, List<Student> studentList,
   ]);
 }
 
-Widget studentTile(BuildContext context, student, List<Student> allPresents,
-    Function(List<Student>) updateList) {
+Widget studentTile(BuildContext context, Presence student,
+    List<Presence> allPresents, Function(List<Presence>) updateList) {
   return ListTile(
     leading: const Icon(Icons.person),
-    title: Text(student.name),
+    title: Text(student.studentName),
     trailing: IconButton(
       icon: const Icon(
         Icons.remove_circle,
