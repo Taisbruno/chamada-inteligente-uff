@@ -8,8 +8,8 @@ class Presence {
   final String entryTime;
   final String exitTime;
   final String timePresent;
-  final double frequency;
-  final bool failed;
+  final double? frequency;
+  final bool? failed;
 
   const Presence({
     required this.presenceId,
@@ -27,14 +27,16 @@ class Presence {
 
   factory Presence.fromJson(Map<String, dynamic> json) {
     return Presence(
-      presenceId: json['id'],
-      studentRegistration: json['registration'] ?? json['studentRegistration'],
-      studentName: json['name'],
-      medicalCertificate: json['medicalCertificate'],
-      message: json['message'],
-      isPresent: json['isPresent'],
-      entryTime: json['entryTime'],
-      exitTime: json['exitTime'] ?? '',
-    );
+        presenceId: json['id'],
+        studentRegistration:
+            json['registration'] ?? json['studentRegistration'],
+        studentName: json['name'],
+        medicalCertificate: json['medicalCertificate'],
+        message: json['message'],
+        isPresent: json['isPresent'],
+        entryTime: json['entryTime'],
+        exitTime: json['exitTime'] ?? '',
+        frequency: json['frequency'],
+        failed: json['failed']);
   }
 }

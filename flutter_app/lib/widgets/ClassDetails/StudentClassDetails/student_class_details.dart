@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/HistoryRoll.dart';
+import 'package:flutter_app/model/Presence.dart';
 import 'package:flutter_app/model/Roll.dart';
-import 'package:flutter_app/model/Student.dart';
 import 'package:flutter_app/providers/UserProvider.dart';
-import 'package:flutter_app/screens/active_call_professor.dart';
-import 'package:flutter_app/services/classes/enrolled_students_service.dart';
 import 'package:flutter_app/services/roll/presence/presence_service.dart';
 import 'package:flutter_app/utils/geolocation/Distance.dart';
 import 'package:flutter_app/utils/geolocation/Geolocator.dart';
@@ -11,28 +10,8 @@ import 'package:flutter_app/utils/Toast.dart';
 import 'package:flutter_app/widgets/ClassDetails/StudentClassDetails/dialog_presence_confirmed.dart';
 import 'package:flutter_app/widgets/ClassDetails/StudentClassDetails/student_roll.dart';
 import 'package:flutter_app/widgets/ClassDetails/button.dart';
-import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/dialog_start_roll.dart';
-import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/student_card.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
-
-//lista de testes
-List<Roll> snapshot = [
-  const Roll(
-      rowId: "rowId",
-      longitude: "500",
-      latitude: "2000",
-      classCode: "1234",
-      createdAt: "10",
-      finishedAt: "20"),
-  const Roll(
-      rowId: "rowId2",
-      longitude: "500",
-      latitude: "200",
-      classCode: "1234",
-      createdAt: "20",
-      finishedAt: "30")
-];
 
 class ClassDetailsData {
   String classCode;
@@ -41,7 +20,8 @@ class ClassDetailsData {
   String semester;
   String description;
   Roll? openRoll;
-  late List<Student> students;
+  List<HistoryRoll> historic = [];
+  String userRegistration;
 
   ClassDetailsData(
       {required this.classCode,
@@ -50,11 +30,12 @@ class ClassDetailsData {
       required this.semester,
       required this.description,
       required this.openRoll,
-      this.students = const []});
+      required this.historic,
+      required this.userRegistration});
 }
 
 Widget studentClassDetails(ClassDetailsData details, BuildContext context,
-    bool isPresent, Function updatePresence) {
+    bool isPresent, Function updatePresence, bool isLoading) {
   TextEditingController endTimecontroller = TextEditingController();
 
   UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -102,26 +83,13 @@ Widget studentClassDetails(ClassDetailsData details, BuildContext context,
           ],
         ),
         const SizedBox(height: 20),
-        studentsInfo(snapshot)
-        /*
-        FutureBuilder(
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Student>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            }
-            if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return noRegistry;
-            } else {
-              return //studentPresence;
-            }
-          },
-        )
-        */
+        if (!isLoading)
+          studentsInfo(details.historic, details.userRegistration),
+        if (isLoading) const CircularProgressIndicator()
       ]));
 }
 
-Widget studentsInfo(List<Roll> snapshot) {
+Widget studentsInfo(List<HistoryRoll> snapshot, String studentRegistration) {
   return Expanded(
       child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,8 +110,8 @@ Widget studentsInfo(List<Roll> snapshot) {
 
             return studentRoll(StudentRollData(
                 date: snapshot[index].createdAt,
-                presence: "Sim",
-                time: snapshot[index].createdAt));
+                presence: checkIsPresent(
+                    snapshot[index].presences, studentRegistration)));
           },
         ),
       )
@@ -217,4 +185,13 @@ Widget noRegistry() {
       ),
     ),
   );
+}
+
+bool checkIsPresent(List<Presence> presences, String registration) {
+  bool isPresent = presences
+      .where((element) => element.isPresent)
+      .map((e) => e.studentRegistration)
+      .contains(registration);
+
+  return isPresent;
 }
