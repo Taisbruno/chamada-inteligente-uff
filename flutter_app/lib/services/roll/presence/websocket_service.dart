@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter_app/model/Presence.dart';
-import 'package:flutter_app/model/Student.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
@@ -19,11 +18,10 @@ class WebsocketService {
         destination: '/topic/presences/$rollId',
         callback: (frame) {
           if (frame.body != null) {
-            print(frame.body);
-            // List<dynamic> jsonList = jsonDecode(frame.body!);
-            // List<Presence> students =
-            //     jsonList.map((e) => Presence.fromJson(e)).toList();
-            // updatePresences(students);
+            List<dynamic> jsonList = jsonDecode(frame.body!);
+            List<Presence> students =
+                jsonList.map((e) => Presence.fromJson(e)).toList();
+            updatePresences(students);
           }
         });
   }

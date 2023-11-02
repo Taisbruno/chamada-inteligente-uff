@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/Presence.dart';
 import 'package:flutter_app/model/Roll.dart';
-import 'package:flutter_app/model/Student.dart';
 import 'package:flutter_app/services/roll/presence/presence_service.dart';
 import 'package:flutter_app/services/roll/presence/websocket_service.dart';
 import 'package:flutter_app/widgets/ActiveCall/add_student.dart';
@@ -31,7 +31,7 @@ class _ActiveCallState extends State<ActiveCallScreen> {
   Timer? timer;
 
   WebsocketService? websocketService;
-  List<Student> students = [];
+  List<Presence> students = [];
   bool isLoading = false;
 
   @override
@@ -80,11 +80,11 @@ class _ActiveCallState extends State<ActiveCallScreen> {
       isLoading = true;
     });
 
-    List<Student> studentsPresent = await getPresenceByRoll(widget.roll.rowId);
+    List<Presence> studentsPresent = await getPresenceByRoll(widget.roll.rowId);
 
     setState(() {
       isLoading = false;
-      students = studentsPresent;
+      students = studentsPresent.where((element) => element.isPresent).toList();
     });
   }
 
@@ -182,16 +182,9 @@ class _ActiveCallState extends State<ActiveCallScreen> {
     );
   }
 
-  updateList(List<Student> currentStudents) {
+  updateList(List<Presence> currentStudents) {
     setState(() {
-      students = currentStudents;
-    });
-  }
-
-  addPresence(List<Student> currentStudents) {
-    students.addAll(currentStudents);
-    setState(() {
-      students = students.toSet().toList();
+      students = currentStudents.where((element) => element.isPresent).toList();
     });
   }
 }

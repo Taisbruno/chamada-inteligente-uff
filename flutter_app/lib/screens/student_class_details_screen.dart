@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/Presence.dart';
 import 'package:flutter_app/model/Roll.dart';
-import 'package:flutter_app/model/Student.dart';
 import 'package:flutter_app/providers/UserProvider.dart';
 import 'package:flutter_app/services/roll/presence/presence_service.dart';
 import 'package:flutter_app/widgets/ClassDetails/StudentClassDetails/dialog_student_statics.dart';
@@ -47,11 +47,11 @@ class _StudentDetailsState extends State<StudentClassDetailsScreen> {
         isLoading = true;
       });
 
-      List<Student> presences = await getPresenceByRoll(widget.roll!.rowId);
+      List<Presence> presences = await getPresenceByRoll(widget.roll!.rowId);
       setState(() {
         isLoading = false;
         isPresent = presences
-            .map((e) => e.registration)
+            .map((e) => e.studentRegistration)
             .contains(userProvider.registration);
       });
     }
