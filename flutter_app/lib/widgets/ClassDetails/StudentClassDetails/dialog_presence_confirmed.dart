@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/providers/UserProvider.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_app/utils/TwoDigits.dart';
 
 Widget dialogPresenceConfirmed(BuildContext context) {
-  UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+  DateTime now = DateTime.now();
+  String formattedTime = '${twoDigits(now.hour)}:${twoDigits(now.minute)}';
 
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
@@ -29,7 +29,7 @@ Widget dialogPresenceConfirmed(BuildContext context) {
         ),
         const SizedBox(height: 5),
         Text(
-          "Aluno confirmou presença às ${DateTime.now().hour}:${DateTime.now().minute}",
+          "Aluno confirmou presença às $formattedTime",
           style: const TextStyle(
             color: Colors.black87,
             fontSize: 14,
