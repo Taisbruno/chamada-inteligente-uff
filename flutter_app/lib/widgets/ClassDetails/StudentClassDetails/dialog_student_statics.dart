@@ -10,10 +10,19 @@ Widget dialogSudentStatics(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Row(
+        const Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              "Total de Aulas: 10", //puxar o valor via somatorio de faltas
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: 10),
             Text(
               "Total de Faltas: 0", //puxar o valor via somatorio de faltas
               style: TextStyle(
@@ -22,13 +31,13 @@ Widget dialogSudentStatics(BuildContext context) {
                 fontSize: 18,
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(height: 10),
             Text(
               "Reprovado: Não", //puxar o valor via total de aulas/total de faltas
               style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
             ),
           ],
@@ -38,9 +47,8 @@ Widget dialogSudentStatics(BuildContext context) {
               Navigator.of(context).pop();
             },
             child: const Text(
-              "Cancelar",
-              style: TextStyle(color: Colors.red),
-        ))
+              "Voltar",
+            ))
       ],
     ),
   );
