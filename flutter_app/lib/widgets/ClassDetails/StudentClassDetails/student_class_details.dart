@@ -104,6 +104,7 @@ Widget studentsInfo(List<HistoryRoll> snapshot, String studentRegistration) {
       ),
       Expanded(
         child: ListView.builder(
+          reverse: true,
           itemCount: snapshot.length,
           itemBuilder: (context, index) {
             //arrumar a chamada para o construtor StudentRollData, variavel presence
