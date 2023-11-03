@@ -87,7 +87,7 @@ class _StudentDetailsState extends State<StudentClassDetailsScreen> {
         appBar: AppBar(
           actions: [
             IconButton(
-              icon: const Icon(Icons.local_pizza),
+              icon: const Icon(Icons.bar_chart_outlined),
               onPressed: () {
                 showDialog(
                     context: context,
