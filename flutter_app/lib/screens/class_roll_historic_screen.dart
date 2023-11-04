@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/services/roll/roll_service.dart';
 import 'package:flutter_app/widgets/RollHistory/roll_history.dart';
 
 class ClassRollHistoricScreen extends StatefulWidget {
+  final String classCode;
+
+  const ClassRollHistoricScreen({super.key, required this.classCode});
+
   @override
-  _ClassRollHistoricScreenState createState() => _ClassRollHistoricScreenState();
+  State<ClassRollHistoricScreen> createState() =>
+      _ClassRollHistoricScreenState();
 }
 
 class _ClassRollHistoricScreenState extends State<ClassRollHistoricScreen> {
@@ -12,46 +18,20 @@ class _ClassRollHistoricScreenState extends State<ClassRollHistoricScreen> {
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColorDark
-            ],
-          )),
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Theme.of(context).primaryColor,
+          Theme.of(context).primaryColorDark
+        ],
+      )),
       child: Scaffold(
         appBar: AppBar(
           foregroundColor: Colors.white,
           title: const Text('Histórico de Chamadas',
               style:
-              TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           backgroundColor: Colors.transparent,
-          actions: <Widget>[
-            ElevatedButton.icon(
-              onPressed: () {
-                // Logic to export the data as a sheet.
-                // For example, you might want to use plugins/packages like `excel` to create an Excel sheet
-                // and then use `share` to share/export it.
-              },
-              icon: Icon(Icons.download_rounded, color: Colors.white),  // Adding an icon for more interactivity
-              label: Text(
-                'Exportar como planilha',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.green, // This sets the background color of the button
-                onPrimary: Colors.white, // This sets the color of the icon and text
-                shape: RoundedRectangleBorder( // This gives the button rounded corners
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8), // Adjusts the button's padding
-              ),
-            ),
-            SizedBox(width: 8)  // To provide a bit of spacing on the right side
-          ],
-
         ),
         backgroundColor: Colors.transparent,
         body: _page(context),
@@ -60,7 +40,22 @@ class _ClassRollHistoricScreenState extends State<ClassRollHistoricScreen> {
   }
 
   Widget _page(BuildContext context) {
-    // FinishedCallData details = FinishedCallData();
-    return rollHistory();
+    return FutureBuilder(
+        future: getClassHistoric(widget.classCode),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (!snapshot.hasData) {
+            return const Center(
+                child: Text("Essa turma ainda não possui uma chamada realizada",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold)));
+          } else {
+            return rollHistory(context, snapshot.data!);
+          }
+        });
   }
 }

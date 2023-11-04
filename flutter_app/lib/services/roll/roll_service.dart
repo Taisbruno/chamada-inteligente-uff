@@ -1,3 +1,5 @@
+// ignore_for_file: null_argument_to_non_null_type
+
 import 'dart:convert';
 
 import 'package:flutter_app/model/HistoryRoll.dart';
@@ -39,7 +41,7 @@ Future<List<HistoryRoll>> getClassHistoric(String classCode) async {
         json.decode(utf8.decode(response.bodyBytes))["rolls"];
     return jsonList.map((json) => HistoryRoll.fromJson(json)).toList();
   } else if (response.statusCode == 404) {
-    return [];
+    return Future.value(null);
   } else {
     throw Exception("Failed trying to fetch user classes");
   }

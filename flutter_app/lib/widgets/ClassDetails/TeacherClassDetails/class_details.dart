@@ -71,16 +71,10 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
             button(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => FinishedClassDetailsScreen()));
+                      builder: (context) => ClassRollHistoricScreen(
+                          classCode: details.classCode)));
                 },
-                title: "Acessar chamada atual",
-                color: Colors.transparent),
-            button(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ClassRollHistoricScreen()));
-                },
-                title: "Histórico de Chamadas",
+                title: "Acessar histórico",
                 color: Colors.transparent),
           ],
         ),
@@ -102,7 +96,6 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
         )
       ]));
 }
-
 
 Widget getFirstButton(Roll? openRoll, BuildContext context,
     TextEditingController controller, String classCode) {

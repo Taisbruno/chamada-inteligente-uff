@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/FinishedCall/finished_call_student_card.dart';
+import 'package:flutter_app/model/HistoryRoll.dart';
 import 'package:flutter_app/widgets/RollHistory/class_history_card.dart';
+import 'package:flutter_app/widgets/shared/button_with_icon.dart';
 
-class ClassDetailsData {}
-
-Widget rollHistory() {
+Widget rollHistory(BuildContext context, List<HistoryRoll> historic) {
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Center(
+        child: buttonWithIcon(
+            title: "Exportar planilha",
+            icon: Icons.download_rounded,
+            onPress: () {
+              print("Em desenvolvimento");
+            }),
+      ),
+      SizedBox(height: 25),
       const Text(
         'Últimas aulas:',
         style: TextStyle(
@@ -17,37 +25,16 @@ Widget rollHistory() {
         ),
       ),
       const SizedBox(height: 20),
-      chamadaList(),
+      Expanded(child: rollCallList(historic)),
     ]),
   );
 }
 
-Widget chamadaList() {
-  // Dummy data for demonstration
-  final List<ClassHistoryCardData> classes = [
-    ClassHistoryCardData(
-      startTime: '01/11/2023 08:00 AM',
-      endTime: '01/11/2023 10:00 AM',
-      latitude: -23.550520,
-      longitude: -46.633308,
-      classCode: 'MATH101',
-    ),
-    ClassHistoryCardData(
-      startTime: '02/11/2023 11:00 AM',
-      endTime: '02/11/2023 01:00 PM',
-      latitude: -23.551620,
-      longitude: -46.634408,
-      classCode: 'PHY102',
-    ),
-    // ... You can add more classes as needed
-  ];
-
+Widget rollCallList(List<HistoryRoll> historic) {
   return ListView.builder(
-    shrinkWrap: true, // makes the ListView children sized to their height
-    physics: NeverScrollableScrollPhysics(), // disables the scroll effect
-    itemCount: classes.length,
+    itemCount: historic.length,
     itemBuilder: (context, index) {
-      return classHistoryCard(classes[index]);
+      return classHistoryCard(context, historic[index], index);
     },
   );
 }
