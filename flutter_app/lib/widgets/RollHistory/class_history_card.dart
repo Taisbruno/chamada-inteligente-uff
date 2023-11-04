@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/HistoryRoll.dart';
+import 'package:flutter_app/screens/finished_call_screen.dart';
+import 'package:flutter_app/utils/TwoDigits.dart';
 
-class ClassHistoryCardData {
-  final String startTime;  // expected format: "dd/mm/yyyy hh:mm"
-  final String endTime;    // expected format: "dd/mm/yyyy hh:mm"
-  final double latitude;
-  final double longitude;
-  final String classCode;
+Widget classHistoryCard(
+    BuildContext context, HistoryRoll historyRoll, int index) {
+  DateTime dt = DateTime.parse(historyRoll.createdAt);
+  DateTime dtFinish = DateTime.parse(historyRoll.finishedAt);
 
-  ClassHistoryCardData({
-    required this.startTime,
-    required this.endTime,
-    required this.latitude,
-    required this.longitude,
-    required this.classCode,
-  });
-}
+  String createdDate =
+      '${twoDigits(dt.day)}/${twoDigits(dt.month)}/${dt.year} ${twoDigits(dt.hour)}:${twoDigits(dt.minute)}';
 
-Widget classHistoryCard(ClassHistoryCardData data) {
+  String finishDate =
+      '${twoDigits(dtFinish.day)}/${twoDigits(dtFinish.month)}/${dtFinish.year} ${twoDigits(dtFinish.hour)}:${twoDigits(dtFinish.minute)}';
+
   return Card(
-    elevation: 3,
+    elevation: 5,
     margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-    color: Colors.orange[100], // You can customize the card color
+    color: Colors.green[100], // You can customize the card color
     child: ListTile(
       title: Text(
-        'Data da Aula: ${data.startTime}',
+        'Aula ${index + 1}',
         style: const TextStyle(
           fontWeight: FontWeight.bold,
         ),
@@ -31,15 +28,19 @@ Widget classHistoryCard(ClassHistoryCardData data) {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          Text('Término da Aula: ${data.endTime}'),
-          Text('Latitude: ${data.latitude.toStringAsFixed(2)}'),
-          Text('Longitude: ${data.longitude.toStringAsFixed(2)}'),
+          const SizedBox(height: 5),
+          const Text('Início da aula:'),
+          Text(createdDate,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
+          const SizedBox(height: 5),
+          const Text('Término da Aula:'),
+          Text(finishDate, style: const TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
       trailing: ElevatedButton(
         onPressed: () {
-          // Logic to view detailed history or other action.
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => FinishedClassDetailsScreen()));
         },
         child: const Text('Detalhes'),
       ),
