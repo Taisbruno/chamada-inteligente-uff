@@ -10,7 +10,7 @@ class FinishedCallStudentCardData {
   FinishedCallStudentCardData(
       {required this.studentName,
       required this.matricula,
-      this.presente = "Sim",
+      required this.presente,
       this.attendedClasses = 10,
       this.reproved = false});
 }
@@ -37,12 +37,18 @@ Widget finishedCallStudentCard(FinishedCallStudentCardData data) {
           Text('Presente: ${data.presente}'),
         ],
       ),
-      trailing: ElevatedButton(
-        onPressed: () {
-          //logica para anexar atestado, verificar se o botão deve aparaecer ou nao. O botão deve aparecer se o aluno faltou
-        },
-        child: const Text('Visualizar \nAtestado'),
-      ),
+      trailing: trailingButton(data.presente),
     ),
   );
+}
+
+Widget? trailingButton(String presente) {
+  if (presente == "Não") {
+    return ElevatedButton(
+      onPressed: () {
+        //logica para anexar atestado, verificar se o botão deve aparaecer ou nao. O botão deve aparecer se o aluno faltou
+      },
+      child: const Text('Visualizar \nAtestado'),
+    );
+  }
 }
