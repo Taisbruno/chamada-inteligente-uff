@@ -10,7 +10,7 @@ class FinishedCallStudentCardData {
   FinishedCallStudentCardData(
       {required this.studentName,
       required this.matricula,
-      this.presente = "Sim",
+      required this.presente,
       this.attendedClasses = 10,
       this.reproved = false});
 }

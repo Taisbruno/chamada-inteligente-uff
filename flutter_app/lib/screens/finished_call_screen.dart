@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/HistoryRoll.dart';
 import 'package:flutter_app/widgets/FinishedCall/finished_call.dart';
 
-class FinishedClassDetailsScreen extends StatefulWidget {
+class FinishedClassScreen extends StatefulWidget {
+  final HistoryRoll historyRoll;
+
+  const FinishedClassScreen({super.key, required this.historyRoll});
+
   @override
-  State<FinishedClassDetailsScreen> createState() => _ClassDetailsState();
+  State<FinishedClassScreen> createState() => _FinishedClassState();
 }
 
-class _ClassDetailsState extends State<FinishedClassDetailsScreen> {
+class _FinishedClassState extends State<FinishedClassScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +39,6 @@ class _ClassDetailsState extends State<FinishedClassDetailsScreen> {
   }
 
   Widget _page(BuildContext context) {
-    // FinishedCallData details = FinishedCallData();
-    return finishedCall();
+    return finishedCall(widget.historyRoll, context);
   }
 }

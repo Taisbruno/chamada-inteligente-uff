@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/HistoryRoll.dart';
+import 'package:flutter_app/model/Presence.dart';
 import 'package:flutter_app/model/Student.dart';
 import 'package:flutter_app/screens/active_call_professor.dart';
 import 'package:flutter_app/services/classes/enrolled_students_service.dart';
@@ -7,32 +9,22 @@ import 'package:flutter_app/widgets/FinishedCall/dialog_finished_call.dart';
 import 'package:flutter_app/widgets/FinishedCall/finished_call.dart';
 import 'package:flutter_app/widgets/FinishedCall/finished_call_student_card.dart';
 
-class ClassDetailsData {}
-
-Widget finishedCall() {
+Widget finishedCall(HistoryRoll details, BuildContext context) {
   TextEditingController endTimecontroller = TextEditingController();
   return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text(
-          'Número de alunos presente: ',
-          style: TextStyle(
+        Text(
+          'Número de alunos presente: ${details.presencePercentage.toStringAsFixed(2)}%',
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
         ),
         const SizedBox(height: 16),
-        const Text(
-          'Média de Tempo dos alunos: ',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
         const SizedBox(height: 20),
-        studentsList(),
+        studentsList(details.presences),
         // FutureBuilder(
         //   future: getStudentsByClass(details.classCode),
         //   builder:
@@ -50,13 +42,13 @@ Widget finishedCall() {
       ]));
 }
 
-Widget studentsList() {
+Widget studentsList(List<Presence> details) {
   return Expanded(
       child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
-        'Alunos Inscritos (5):',
+        'Alunos Inscritos (${details.length}):',
         style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -65,10 +57,12 @@ Widget studentsList() {
       ),
       Expanded(
         child: ListView.builder(
-          itemCount: 5,
+          itemCount: details.length,
           itemBuilder: (context, index) {
             return finishedCallStudentCard(FinishedCallStudentCardData(
-                studentName: "Tais", matricula: "1234"));
+                studentName: details[index].studentName,
+                matricula: details[index].studentRegistration,
+                presente: details[index].isPresent ? "Sim" : "Não"));
           },
         ),
       )

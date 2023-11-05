@@ -40,7 +40,8 @@ Widget classHistoryCard(
       trailing: ElevatedButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => FinishedClassDetailsScreen()));
+              builder: (context) =>
+                  FinishedClassScreen(historyRoll: historyRoll)));
         },
         child: const Text('Detalhes'),
       ),
