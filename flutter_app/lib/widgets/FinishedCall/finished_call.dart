@@ -15,7 +15,7 @@ Widget finishedCall(HistoryRoll details, BuildContext context) {
       padding: const EdgeInsets.all(16.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          'Número de alunos presente: ${details.presencePercentage.toStringAsFixed(2)}%',
+          'Número de alunos presente: ${details.studentsPresent}',
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -25,20 +25,6 @@ Widget finishedCall(HistoryRoll details, BuildContext context) {
         const SizedBox(height: 16),
         const SizedBox(height: 20),
         studentsList(details.presences),
-        // FutureBuilder(
-        //   future: getStudentsByClass(details.classCode),
-        //   builder:
-        //       (BuildContext context, AsyncSnapshot<List<Student>> snapshot) {
-        //     if (snapshot.connectionState == ConnectionState.waiting) {
-        //       return const CircularProgressIndicator();
-        //     }
-        //     if (!snapshot.hasData || snapshot.data!.isEmpty) {
-        //       return _noStudents();
-        //     } else {
-        //       return studentsList(snapshot.data!);
-        //     }
-        //   },
-        // )
       ]));
 }
 
