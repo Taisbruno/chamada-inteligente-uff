@@ -15,13 +15,22 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         flutter-version: '3.13.4'
+        
     - name: Get dependencies
       run: flutter pub get
       working-directory: ./flutter_app
 
-    - run: flutter test
-    - run: flutter analyze
-    - run: flutter build apk --
+    - name: Run tests
+      run: flutter test
+      working-directory: ./flutter_app
+
+    - name: Analyze
+      run: flutter analyze
+      working-directory: ./flutter_app
+
+    - name: Build Apk
+      run: flutter build apk --
+      working-directory: ./flutter_app
     
     - name: Upload APK
       uses: actions/upload-artifact@v2
