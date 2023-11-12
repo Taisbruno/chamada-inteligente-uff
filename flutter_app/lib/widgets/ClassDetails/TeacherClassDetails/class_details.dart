@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/model/Roll.dart';
 import 'package:flutter_app/model/Student.dart';
 import 'package:flutter_app/screens/active_call_professor.dart';
-import 'package:flutter_app/screens/finished_call_screen.dart';
 import 'package:flutter_app/services/classes/enrolled_students_service.dart';
 import 'package:flutter_app/widgets/ClassDetails/button.dart';
 import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/dialog_start_roll.dart';

@@ -12,13 +12,12 @@ class StudentRollData {
 }
 
 Widget studentRoll(StudentRollData data) {
-  const String numberOfClasses = "100";
   DateTime dtDate = DateTime.parse(data.date);
 
   String numberData =
       '${twoDigits(dtDate.day)}/${twoDigits(dtDate.month)}/${dtDate.year}';
   String numberHour = '${twoDigits(dtDate.hour)}:${twoDigits(dtDate.minute)}';
-  String stringPresence = '${data.presence ? "Sim" : "Não"}';
+  String stringPresence = data.presence ? "Sim" : "Não";
 
   return Card(
     elevation: 3,

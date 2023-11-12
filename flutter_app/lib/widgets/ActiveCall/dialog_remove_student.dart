@@ -43,7 +43,7 @@ Widget dialogRemoveStudent(BuildContext context, Presence student,
         ),
         const SizedBox(height: 5),
         Text(
-          'Matrícula: ${student.studentRegistration!}',
+          'Matrícula: ${student.studentRegistration}',
           style: const TextStyle(
             color: Colors.black87,
             fontSize: 14,
