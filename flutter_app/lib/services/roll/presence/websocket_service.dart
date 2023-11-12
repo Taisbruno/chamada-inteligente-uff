@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_app/model/Presence.dart';
+import 'package:flutter_app/services/constants.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
@@ -29,7 +30,7 @@ class WebsocketService {
   initClient() {
     client = StompClient(
         config: StompConfig(
-      url: 'ws://localhost:8443/websocket-endpoint',
+      url: websocketServerUrl,
       onConnect: onConnectCallback,
       onStompError: (frame) => print("Erro stomp"),
       onWebSocketError: (dynamic error) => print(error.message.toString()),
