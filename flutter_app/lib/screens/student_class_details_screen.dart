@@ -64,6 +64,7 @@ class _StudentDetailsState extends State<StudentClassDetailsScreen> {
 
       List<Presence> presences = await getPresenceByRoll(widget.roll!.rowId);
       setState(() {
+        isLoading = false;
         isPresent = presences
             .map((e) => e.studentRegistration)
             .contains(userProvider.registration);
