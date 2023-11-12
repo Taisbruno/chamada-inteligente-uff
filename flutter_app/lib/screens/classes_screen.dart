@@ -111,6 +111,6 @@ class _ClassesPageState extends State<ClassesScreen> {
   }
 
   onGoBack(dynamic) {
-    this.setState(() {});
+    setState(() {});
   }
 }

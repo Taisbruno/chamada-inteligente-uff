@@ -36,8 +36,6 @@ class ClassDetailsData {
 
 Widget studentClassDetails(ClassDetailsData details, BuildContext context,
     bool isPresent, Function updatePresence, bool isLoading) {
-  TextEditingController endTimecontroller = TextEditingController();
-
   UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
 
   return Padding(

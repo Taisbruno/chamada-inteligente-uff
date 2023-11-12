@@ -29,7 +29,7 @@ class _LoginPageState extends State<LogInScreen> {
     });
 
     final response = await authenticate(cpf, password);
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
 
     setState(() {
       isLoading = false;

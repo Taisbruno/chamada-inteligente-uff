@@ -16,8 +16,6 @@ class FinishedCallStudentCardData {
 }
 
 Widget finishedCallStudentCard(FinishedCallStudentCardData data) {
-  const String numberOfClasses = "100";
-
   return Card(
     elevation: 3,
     margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -51,4 +49,5 @@ Widget? trailingButton(String presente) {
       child: const Text('Visualizar \nAtestado'),
     );
   }
+  return null;
 }

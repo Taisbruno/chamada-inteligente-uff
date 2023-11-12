@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/HistoryRoll.dart';
 import 'package:flutter_app/model/Presence.dart';
-import 'package:flutter_app/model/Student.dart';
-import 'package:flutter_app/screens/active_call_professor.dart';
-import 'package:flutter_app/services/classes/enrolled_students_service.dart';
-import 'package:flutter_app/widgets/ClassDetails/button.dart';
-import 'package:flutter_app/widgets/FinishedCall/dialog_finished_call.dart';
-import 'package:flutter_app/widgets/FinishedCall/finished_call.dart';
 import 'package:flutter_app/widgets/FinishedCall/finished_call_student_card.dart';
 
 Widget finishedCall(HistoryRoll details, BuildContext context) {
-  TextEditingController endTimecontroller = TextEditingController();
   return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -54,18 +47,4 @@ Widget studentsList(List<Presence> details) {
       )
     ],
   ));
-}
-
-Widget _noStudents() {
-  return Center(
-    child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      alignment: Alignment.center,
-      child: const Text(
-        "Nenhum aluno está inscrito nesta turma ainda",
-        style: TextStyle(color: Colors.white, fontSize: 20.0),
-        textAlign: TextAlign.center,
-      ),
-    ),
-  );
 }
