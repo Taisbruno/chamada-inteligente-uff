@@ -17,7 +17,7 @@ class ExcelHelper {
     return 'Histórico de Chamadas';
   }
 
-  Future<Excel> generateExcelSheet(String filename) async {
+  Future<String?> generateExcelSheet(String filename) async {
     excel.rename(excel.getDefaultSheet()!, getSheetName());
     buildStudents();
     buildRolls();
@@ -25,14 +25,19 @@ class ExcelHelper {
     excel.save(fileName: '$filename.xlsx');
 
     if (Platform.isAndroid || Platform.isIOS) {
+      List<int>? bytes = excel.save(fileName: '$filename.xlsx');
       Directory directory = await getApplicationDocumentsDirectory();
       print(directory.path);
-      // File('$directory/chamadas_turma.xlsx')
-      //   ..createSync(recursive: true)
-      //   ..writeAsBytesSync(bytes!);
+      File('${directory.path}/$filename.xlsx')
+        ..createSync(recursive: true)
+        ..writeAsBytesSync(bytes!);
+
+      return '${directory.path}/$filename.xlsx';
+    } else {
+      excel.save(fileName: '$filename.xlsx');
     }
 
-    return excel;
+    return null;
   }
 
   void buildStudents() {
@@ -43,7 +48,10 @@ class ExcelHelper {
           CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: row),
           student.name,
           cellStyle: CellStyle(
-              fontSize: 12, bold: true, textWrapping: TextWrapping.Clip));
+              fontSize: 12,
+              bold: true,
+              textWrapping: TextWrapping.Clip,
+              backgroundColorHex: 'cde9ee'));
 
       row++;
     });
@@ -59,6 +67,7 @@ class ExcelHelper {
           CellIndex.indexByColumnRow(columnIndex: col, rowIndex: 0),
           '${dt.day}/${dt.month}',
           cellStyle: CellStyle(
+              backgroundColorHex: 'cde9ee',
               fontSize: 12,
               bold: true,
               textWrapping: TextWrapping.Clip,
@@ -85,7 +94,8 @@ class ExcelHelper {
           CellIndex.indexByColumnRow(columnIndex: col, rowIndex: row), text,
           cellStyle: CellStyle(
               horizontalAlign: HorizontalAlign.Center,
-              verticalAlign: VerticalAlign.Center));
+              verticalAlign: VerticalAlign.Center,
+              backgroundColorHex: text == 'PRESENTE' ? 'c6eddb' : 'f4c0c0'));
 
       row++;
     });
