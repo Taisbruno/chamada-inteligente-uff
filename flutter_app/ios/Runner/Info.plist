@@ -49,5 +49,9 @@
 	<string>Este app precise de acesso a sua localização.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Este app precise de acesso a sua localização em segundo plano.</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 </dict>
 </plist>
