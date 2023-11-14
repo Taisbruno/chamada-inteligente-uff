@@ -1,7 +1,12 @@
+import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/helper/excel/ExcelHelper.dart';
 import 'package:flutter_app/model/HistoryRoll.dart';
+import 'package:flutter_app/model/Student.dart';
+import 'package:flutter_app/services/classes/enrolled_students_service.dart';
 import 'package:flutter_app/widgets/RollHistory/class_history_card.dart';
 import 'package:flutter_app/widgets/shared/button_with_icon.dart';
+import 'package:open_file/open_file.dart';
 
 Widget rollHistory(BuildContext context, List<HistoryRoll> historic) {
   return Padding(
@@ -11,8 +16,21 @@ Widget rollHistory(BuildContext context, List<HistoryRoll> historic) {
         child: buttonWithIcon(
             title: "Exportar planilha",
             icon: Icons.download_rounded,
-            onPress: () {
-              print("Em desenvolvimento");
+            onPress: () async {
+              List<Student> students =
+                  await getStudentsByClass(historic.first.classCode);
+
+              ExcelHelper helper = ExcelHelper(
+                  excel: Excel.createExcel(),
+                  students: students,
+                  rolls: historic);
+
+              String? path = await helper.generateExcelSheet(
+                  "Histórico de Chamadas - Cod ${historic.first.classCode}");
+
+              if (path != null) {
+                OpenFile.open(path);
+              }
             }),
       ),
       SizedBox(height: 25),
