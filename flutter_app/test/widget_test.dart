@@ -7,10 +7,10 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
   testWidgets('Login screen test', (WidgetTester tester) async {
-    // Crie um MockNavigatorObserver para observar navegações
+    // Create a MockNavigatorObserver to observe navigations
     final mockObserver = MockNavigatorObserver();
 
-    // Construa nossa tela e acione todos os micromodos
+    // Build screen and activete micro modules
     await tester.pumpWidget(
       MaterialApp(
         home: const LogInScreen(),
@@ -18,11 +18,11 @@ void main() {
       ),
     );
 
-    // Verifique se a AppBar foi renderizada corretamente
+    // Verify iff AppBar war rendered correctly
     expect(find.text('Login'), findsWidgets);
     expect(find.byType(AppBar), findsOneWidget);
 
-    // Verifique se o botão "Sou aluno" foi renderizado corretamente
+    // Verify if Student and Teacher Buttons were rendered correctly
     expect(find.text('Sou aluno'), findsOneWidget);
     expect(find.text('Sou professor'), findsOneWidget);
   });
