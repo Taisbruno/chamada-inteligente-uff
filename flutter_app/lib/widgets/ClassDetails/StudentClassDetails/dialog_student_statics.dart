@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/HistoryRoll.dart';
+import 'package:flutter_app/providers/UserProvider.dart';
+import 'package:provider/provider.dart';
 import '../../../utils/Toast.dart';
 
 Widget dialogSudentStatics(List<HistoryRoll> historic, BuildContext context) {
+  UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
     child: Column(
@@ -23,7 +27,7 @@ Widget dialogSudentStatics(List<HistoryRoll> historic, BuildContext context) {
             ),
             SizedBox(height: 10),
             Text(
-              "Total de Faltas: 0", //puxar o valor via somatorio de faltas
+              "Total de Faltas: ${historic.last.presences.where((element) => element.studentRegistration == userProvider.registration).first.frequency}", //puxar o valor via somatorio de faltas
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -32,7 +36,7 @@ Widget dialogSudentStatics(List<HistoryRoll> historic, BuildContext context) {
             ),
             SizedBox(height: 10),
             Text(
-              "Reprovado: Não", //puxar o valor via total de aulas/total de faltas
+              "Reprovado: ${historic.last.presences.where((element) => element.studentRegistration == userProvider.registration).first.failed! ? "Sim" : "Não"}", //puxar o valor via total de aulas/total de faltas
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -56,4 +60,8 @@ Widget dialogSudentStatics(List<HistoryRoll> historic, BuildContext context) {
 void handleError(BuildContext context, String error) {
   showToast(context, error, "Entendi");
   Navigator.of(context).pop();
+}
+
+double presencePercentage(List<HistoryRoll> historic) {
+  return 0.0;
 }
