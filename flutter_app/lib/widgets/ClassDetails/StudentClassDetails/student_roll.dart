@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/utils/TwoDigits.dart';
+import 'package:file_picker/file_picker.dart';
 
 class StudentRollData {
   final String date;
@@ -46,8 +47,19 @@ Widget? getTrailing(bool isPresent) {
   if (!isPresent) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(minimumSize: Size(115, 30)),
-        onPressed: () {
-          //logica para anexar atestado, verificar se o botão deve aparaecer ou nao. O botão deve aparecer se o aluno faltou
+        onPressed: () async {
+          FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+          if(result != null) {
+            PlatformFile file = result.files.first;
+            print(file.name);
+            print(file.bytes);
+            print(file.size);
+            print(file.extension);
+            print(file.path);
+          } else {
+            // User canceled the picker
+          }
         },
         child: const Padding(
           padding: EdgeInsets.symmetric(vertical: 6),
