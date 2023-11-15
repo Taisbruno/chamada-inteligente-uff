@@ -8,6 +8,7 @@ import 'package:flutter_app/utils/geolocation/Geolocator.dart';
 import 'package:flutter_app/widgets/ClassDetails/button.dart';
 import 'package:flutter_app/widgets/shared/timer_field.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart';
 
 import '../../../utils/Toast.dart';
 
@@ -52,7 +53,8 @@ Widget dialogStartRoll(TextEditingController endTimeController,
         button(
             onPressed: () async {
               determinePosition()
-                  .then((value) => handleSuccess(context, value, classCode))
+                  .then((value) => handleSuccess(
+                      context, value, classCode, endTimeController.text))
                   .onError((error, stackTrace) =>
                       handleError(context, error.toString()));
             },
@@ -71,18 +73,24 @@ Widget dialogStartRoll(TextEditingController endTimeController,
   );
 }
 
-void handleSuccess(
-    BuildContext context, Position position, String classCode) async {
+void handleSuccess(BuildContext context, Position position, String classCode,
+    String time) async {
   createRoll(position.latitude.toString(), position.longitude.toString(),
           classCode)
-      .then((value) {
+      .then((value) async {
     if (value.statusCode == 200) {
       Roll roll = Roll.fromJson(jsonDecode(value.body));
+
+      if (time != '') {
+        await scheduleFinish(context, roll.rowId, time);
+      }
+
       Navigator.of(context).pop();
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ActiveCallScreen(
                 classCode: roll.classCode,
                 roll: roll,
+                scheduledFinishTime: time,
               )));
     } else {
       showToast(context, "Não foi possível criar uma nova chamada", "Entendi");
@@ -94,4 +102,17 @@ void handleSuccess(
 void handleError(BuildContext context, String error) {
   showToast(context, error, "Entendi");
   Navigator.of(context).pop();
+}
+
+Future<void> scheduleFinish(
+    BuildContext context, String rollId, String time) async {
+  Response value = await setFinishSchedule(rollId, time);
+  if (value.statusCode == 200) {
+    showToast(context, "Término da chamada agendado para $time", "Entendi");
+  } else {
+    showToast(
+        context,
+        "Não foi possível agendar um término para a chamada. Você deverá finalizá-la manualmente",
+        "OK");
+  }
 }

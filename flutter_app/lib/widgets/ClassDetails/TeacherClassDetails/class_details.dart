@@ -112,9 +112,20 @@ Widget getFirstButton(Roll? openRoll, BuildContext context,
   } else {
     return button(
         onPressed: () {
+          String time = '';
+
+          if (openRoll.scheduleCloseTime != '') {
+            DateTime dt = DateTime.parse(openRoll.scheduleCloseTime);
+            time = '${dt.hour}:${dt.minute}';
+          }
+
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ActiveCallScreen(
-                  classCode: classCode, roll: openRoll, isAlreadyOpen: true)));
+                    classCode: classCode,
+                    roll: openRoll,
+                    isAlreadyOpen: true,
+                    scheduledFinishTime: time,
+                  )));
         },
         title: "Ver chamada",
         color: Colors.green);
