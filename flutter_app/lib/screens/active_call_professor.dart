@@ -6,6 +6,7 @@ import 'package:flutter_app/model/Roll.dart';
 import 'package:flutter_app/services/roll/presence/presence_service.dart';
 import 'package:flutter_app/services/roll/presence/websocket_service.dart';
 import 'package:flutter_app/widgets/ActiveCall/add_student.dart';
+import 'package:flutter_app/widgets/ActiveCall/dialog_finished_roll.dart';
 import 'package:flutter_app/widgets/ActiveCall/end_call.dart';
 import 'package:flutter_app/widgets/ActiveCall/timer.dart';
 import 'package:flutter_app/widgets/ActiveCall/students_list.dart';
@@ -14,13 +15,14 @@ class ActiveCallScreen extends StatefulWidget {
   final String classCode;
   final Roll roll;
   final bool isAlreadyOpen;
+  final String scheduledFinishTime;
 
-  const ActiveCallScreen({
-    super.key,
-    required this.classCode,
-    required this.roll,
-    this.isAlreadyOpen = false,
-  });
+  const ActiveCallScreen(
+      {super.key,
+      required this.classCode,
+      required this.roll,
+      this.isAlreadyOpen = false,
+      this.scheduledFinishTime = ''});
 
   @override
   State<ActiveCallScreen> createState() => _ActiveCallState();
@@ -56,9 +58,23 @@ class _ActiveCallState extends State<ActiveCallScreen> {
 
     setState(() {
       final seconds = duration.inSeconds + addSeconds;
-
       duration = Duration(seconds: seconds);
     });
+
+    if (widget.scheduledFinishTime != '') {
+      DateTime now = DateTime.now();
+      String time = '${now.hour}:${now.minute}';
+
+      if (time == widget.scheduledFinishTime) {
+        stopTimer();
+        showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => Dialog(
+                  child: dialogFinishedRoll(context),
+                ));
+      }
+    }
   }
 
   void startTimer() {
