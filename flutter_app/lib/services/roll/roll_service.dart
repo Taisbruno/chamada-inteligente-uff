@@ -30,6 +30,20 @@ Future<http.Response> finishRoll(String rollId) async {
   return response;
 }
 
+Future<http.Response> setFinishSchedule(String rollId, String time) async {
+  final body = jsonEncode({
+    'rollId': rollId,
+    'endTime': time,
+  });
+
+  final response = await http.patch(
+      Uri.parse("$baseApiUrl/roll/close-roll-scheduled/"),
+      body: body,
+      headers: requestHeaders);
+
+  return response;
+}
+
 Future<List<HistoryRoll>> getClassHistoric(String classCode) async {
   final response = await http.get(
       Uri.parse(

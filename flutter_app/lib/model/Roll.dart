@@ -5,6 +5,7 @@ class Roll {
   final String classCode;
   final String createdAt;
   final String finishedAt;
+  final String scheduleCloseTime;
   final bool isOpen;
 
   const Roll(
@@ -14,6 +15,7 @@ class Roll {
       required this.classCode,
       required this.createdAt,
       required this.finishedAt,
+      this.scheduleCloseTime = '',
       this.isOpen = false});
 
   factory Roll.fromJson(Map<String, dynamic> json) {
@@ -24,6 +26,7 @@ class Roll {
         classCode: json['classCode'],
         createdAt: json['createdAt'],
         finishedAt: json['finishedAt'],
+        scheduleCloseTime: json['scheduleCloseTime'],
         isOpen: json['isOpen']);
   }
 }
