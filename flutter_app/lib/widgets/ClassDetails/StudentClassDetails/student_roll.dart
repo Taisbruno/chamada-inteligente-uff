@@ -69,35 +69,35 @@ Widget? getOption(bool fileSent) {
       )
     );   
   }
-
+  
   return ElevatedButton(
-        style: ElevatedButton.styleFrom(minimumSize: Size(115, 30)),
-        onPressed: () async {
-          FilePickerResult? result = await FilePicker.platform.pickFiles(
-            type: FileType.custom,
-            allowedExtensions: ['pdf','png', 'jpg', 'jpeg'],
-          );
-
-          if(result != null) {
-            fileSent = true;
-            //fazer a logica para enviar o arquivo para o BD
-
-            PlatformFile file = result.files.first;
-            print(file.name);
-            print(file.bytes);
-            print(file.size);
-            print(file.extension);
-          } else {
-            //Caso o usuario feche a aba de selecionar arquivos
-          }
-        },
-        child: const Padding(
-          padding: EdgeInsets.symmetric(vertical: 6),
-          child: Text(
-            'Anexar\nAtestado',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-          ),
-        )
+    style: ElevatedButton.styleFrom(minimumSize: Size(115, 30)),
+    onPressed: () async {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf','png', 'jpg', 'jpeg'],
       );
+
+      if(result != null) {
+        fileSent = true;
+        //fazer a logica para enviar o arquivo para o BD
+
+        PlatformFile file = result.files.first;
+        print(file.name);
+        print(file.bytes);
+        print(file.size);
+        print(file.extension);
+      } else {
+        //Caso o usuario feche a aba de selecionar arquivos
+      }
+    },
+    child: const Padding(
+      padding: EdgeInsets.symmetric(vertical: 6),
+      child: Text(
+        'Anexar\nAtestado',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+      ),
+    )
+  );
 }
