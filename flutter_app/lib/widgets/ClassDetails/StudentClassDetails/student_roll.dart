@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/utils/TwoDigits.dart';
+import 'package:file_picker/file_picker.dart';
 
 class StudentRollData {
   final String date;
@@ -44,10 +45,51 @@ Widget studentRoll(StudentRollData data) {
 
 Widget? getTrailing(bool isPresent) {
   if (!isPresent) {
+    bool fileSent = false;
+    return getOption(fileSent);     
+  }
+  
+  return Icon(Icons.check_circle_outline, color: Colors.green[800]);
+}
+
+Widget? getOption(bool fileSent) {
+  if (fileSent) {
     return ElevatedButton(
+      onPressed: () async {
+        //fazer a logica para puxar e visualizar o arquivo do BD
+      },
+      style: ElevatedButton.styleFrom(minimumSize: Size(115, 30)),
+      child: const Padding(
+        padding: EdgeInsets.symmetric(vertical: 6),
+        child: Text(
+          'Visualizar\nAtestado',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+        ),
+      )
+    );   
+  }
+
+  return ElevatedButton(
         style: ElevatedButton.styleFrom(minimumSize: Size(115, 30)),
-        onPressed: () {
-          //logica para anexar atestado, verificar se o botão deve aparaecer ou nao. O botão deve aparecer se o aluno faltou
+        onPressed: () async {
+          FilePickerResult? result = await FilePicker.platform.pickFiles(
+            type: FileType.custom,
+            allowedExtensions: ['pdf','png', 'jpg', 'jpeg'],
+          );
+
+          if(result != null) {
+            fileSent = true;
+            //fazer a logica para enviar o arquivo para o BD
+
+            PlatformFile file = result.files.first;
+            print(file.name);
+            print(file.bytes);
+            print(file.size);
+            print(file.extension);
+          } else {
+            //Caso o usuario feche a aba de selecionar arquivos
+          }
         },
         child: const Padding(
           padding: EdgeInsets.symmetric(vertical: 6),
@@ -56,8 +98,6 @@ Widget? getTrailing(bool isPresent) {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
-        ));
-  }
-
-  return Icon(Icons.check_circle_outline, color: Colors.green[800]);
+        )
+      );
 }
