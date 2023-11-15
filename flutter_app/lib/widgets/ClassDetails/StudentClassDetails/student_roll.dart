@@ -56,7 +56,6 @@ Widget? getTrailing(bool isPresent) {
             print(file.bytes);
             print(file.size);
             print(file.extension);
-            print(file.path);
           } else {
             // User canceled the picker
           }
