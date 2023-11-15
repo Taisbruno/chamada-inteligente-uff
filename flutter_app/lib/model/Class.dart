@@ -34,7 +34,8 @@ class Class {
                 classCode: roll['classCode'],
                 createdAt: roll['createdAt'],
                 finishedAt: roll['finishedAt'],
-                isOpen: roll['isOpen']))
+                isOpen: roll['isOpen'],
+                scheduleCloseTime: roll['scheduleCloseTime']))
             .toList());
   }
 }
