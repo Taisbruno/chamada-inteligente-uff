@@ -93,7 +93,7 @@ class _StudentDetailsState extends State<StudentClassDetailsScreen> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => Dialog(
-                          child: dialogSudentStatics(context),
+                          child: dialogSudentStatics(historicRolls, context),
                         ));
               },
             )

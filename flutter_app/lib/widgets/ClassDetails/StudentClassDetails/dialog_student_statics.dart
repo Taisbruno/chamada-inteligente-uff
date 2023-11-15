@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/HistoryRoll.dart';
 import '../../../utils/Toast.dart';
 
-Widget dialogSudentStatics(BuildContext context) {
+Widget dialogSudentStatics(List<HistoryRoll> historic, BuildContext context) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Column(
+        Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Total de Aulas: 10", //puxar o valor via somatorio de faltas
+              "Total de Aulas: ${historic.length}", //puxar o valor via somatorio de faltas
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
