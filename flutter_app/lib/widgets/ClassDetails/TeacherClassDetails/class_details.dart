@@ -8,6 +8,7 @@ import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/dialog_star
 import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/student_card.dart';
 
 import '../../../screens/class_roll_historic_screen.dart';
+import '../../../screens/recurrent_call_configuration.dart';
 
 class ClassDetailsData {
   String classCode;
@@ -65,8 +66,7 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            getFirstButton(
-                openRoll, context, endTimecontroller, details.classCode),
+            getFirstButton(openRoll, context, endTimecontroller, details.classCode),
             button(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -75,6 +75,13 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
                 },
                 title: "Acessar histórico",
                 color: Colors.transparent),
+            button(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => RecurrentChamadaConfiguration(classCode: details.classCode,)));
+                },
+                title: "Configurar Chamada Recorrente",
+                color: Colors.orange),
           ],
         ),
         const SizedBox(height: 20),
