@@ -10,14 +10,25 @@ class RecurrentChamadaConfiguration extends StatefulWidget {
   RecurrentChamadaConfiguration({required this.classCode});
 
   @override
-  _RecurrentChamadaConfigurationState createState() => _RecurrentChamadaConfigurationState();
+  _RecurrentChamadaConfigurationState createState() =>
+      _RecurrentChamadaConfigurationState();
 }
 
-class _RecurrentChamadaConfigurationState extends State<RecurrentChamadaConfiguration> {
+class _RecurrentChamadaConfigurationState
+    extends State<RecurrentChamadaConfiguration> {
   TimeOfDay startTime = TimeOfDay.now();
-  TimeOfDay endTime = TimeOfDay(hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
+  TimeOfDay endTime =
+      TimeOfDay(hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
   TextEditingController locationController = TextEditingController();
-  List<String> daysOfWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+  List<String> daysOfWeek = [
+    'Segunda',
+    'Terça',
+    'Quarta',
+    'Quinta',
+    'Sexta',
+    'Sábado',
+    'Domingo'
+  ];
   List<String> selectedDays = [];
 
   Future<void> _selectTime(BuildContext context, bool isStartTime) async {
@@ -41,7 +52,7 @@ class _RecurrentChamadaConfigurationState extends State<RecurrentChamadaConfigur
       spacing: 8.0, // Gap between chips
       children: List<Widget>.generate(
         daysOfWeek.length,
-            (int index) {
+        (int index) {
           return ChoiceChip(
             label: Text(daysOfWeek[index]),
             selected: selectedDays.contains(daysOfWeek[index]),
@@ -77,7 +88,9 @@ class _RecurrentChamadaConfigurationState extends State<RecurrentChamadaConfigur
         "latitude": locationController.text.split(',')[1].trim(),
       };
 
-      var response = await http.post(url, body: json.encode(data), headers: {"Content-Type": "application/json"});
+      var response = await http.post(url,
+          body: json.encode(data),
+          headers: {"Content-Type": "application/json"});
       if (response.statusCode == 200) {
         _showSnackBar(context, "Chamada Agendada!", Colors.green);
       } else {
@@ -89,10 +102,10 @@ class _RecurrentChamadaConfigurationState extends State<RecurrentChamadaConfigur
   String _formatTimeOfDay(TimeOfDay time) {
     final now = new DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
-    final format = DateFormat('HH:mm:ss'); // Use the intl package for formatting
+    final format =
+        DateFormat('HH:mm:ss'); // Use the intl package for formatting
     return format.format(dt);
   }
-
 
   void _showSnackBar(BuildContext context, String message, Color color) {
     final snackBar = SnackBar(
@@ -102,85 +115,117 @@ class _RecurrentChamadaConfigurationState extends State<RecurrentChamadaConfigur
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Configurar Chamada Recorrente'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Dia da semana:',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Theme.of(context).primaryColor,
+          Theme.of(context).primaryColorDark
+        ],
+      )),
+      child: Scaffold(
+        appBar: AppBar(
+          foregroundColor: Colors.white,
+          title: const Text("Agendar Chamada",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          backgroundColor: Colors.transparent,
+        ),
+        backgroundColor: Colors.transparent,
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Dia da semana:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 18),
+                    ),
+                    SizedBox(height: 10),
+                    buildDaysOfWeekChips(),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: ListTile(
+                  title: Text(
+                    'Hora Início Chamada: ${startTime.format(context)}',
+                    style: TextStyle(color: Colors.white),
                   ),
-                  buildDaysOfWeekChips(),
+                  trailing: Icon(Icons.access_time, color: Colors.white),
+                  onTap: () => _selectTime(context, true),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: ListTile(
+                  title: Text('Hora Fim Chamada: ${endTime.format(context)}',
+                      style: TextStyle(color: Colors.white)),
+                  trailing: Icon(Icons.access_time, color: Colors.white),
+                  onTap: () => _selectTime(context, false),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: TextField(
+                  controller: locationController,
+                  decoration: InputDecoration(
+                      labelText: 'Local',
+                      fillColor: Colors.white,
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      labelStyle: TextStyle(color: Colors.white)),
+                ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      _sendScheduleToBackend();
+                    },
+                    child: Text(
+                      'Confirmar',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      'Cancelar',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                    ),
+                  ),
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ListTile(
-                title: Text('Hora Início Chamada: ${startTime.format(context)}'),
-                trailing: Icon(Icons.access_time),
-                onTap: () => _selectTime(context, true),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ListTile(
-                title: Text('Hora Fim Chamada: ${endTime.format(context)}'),
-                trailing: Icon(Icons.access_time),
-                onTap: () => _selectTime(context, false),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: TextField(
-                controller: locationController,
-                decoration: InputDecoration(labelText: 'Local'),
-              ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    _sendScheduleToBackend();
-                  },
-                  child: Text(
-                    'Confirmar',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    'Cancelar',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
