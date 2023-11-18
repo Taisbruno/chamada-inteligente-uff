@@ -7,14 +7,14 @@ import 'package:intl/intl.dart';
 class RecurrentChamadaConfiguration extends StatefulWidget {
   final String classCode; // Assuming you pass classCode to this widget
 
-  RecurrentChamadaConfiguration({required this.classCode});
+  const RecurrentChamadaConfiguration({super.key, required this.classCode});
 
   @override
-  _RecurrentChamadaConfigurationState createState() =>
-      _RecurrentChamadaConfigurationState();
+  RecurrentChamadaConfigurationState createState() =>
+      RecurrentChamadaConfigurationState();
 }
 
-class _RecurrentChamadaConfigurationState
+class RecurrentChamadaConfigurationState
     extends State<RecurrentChamadaConfiguration> {
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime =
@@ -100,7 +100,7 @@ class _RecurrentChamadaConfigurationState
   }
 
   String _formatTimeOfDay(TimeOfDay time) {
-    final now = new DateTime.now();
+    final now = DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
     final format =
         DateFormat('HH:mm:ss'); // Use the intl package for formatting
@@ -202,24 +202,24 @@ class _RecurrentChamadaConfigurationState
                     onPressed: () {
                       _sendScheduleToBackend();
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                    ),
                     child: Text(
                       'Confirmar',
                       style: TextStyle(color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
                     ),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    ),
                     child: Text(
                       'Cancelar',
                       style: TextStyle(color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
                     ),
                   ),
                 ],
