@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 class StudentCardData {
   final String studentName;
   final String matricula;
-  final int attendedClasses;
+  final double frequency;
   final bool reproved;
 
   StudentCardData(
       {required this.studentName,
       required this.matricula,
-      this.attendedClasses = 10,
-      this.reproved = false});
+      required this.frequency,
+      required this.reproved});
 }
 
 Widget studentCard(StudentCardData data) {
-  const String numberOfClasses = "100";
+  String formattedFrequency = data.frequency.toStringAsFixed(0);
 
   return Card(
     elevation: 3,
@@ -32,7 +32,7 @@ Widget studentCard(StudentCardData data) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Matrícula: ${data.matricula}'),
-          Text('Aulas comparecidas: ${data.attendedClasses}/$numberOfClasses'),
+          Text('Taxa de frequência: $formattedFrequency%'),
           Text('Reprovado por falta: ${data.reproved ? 'Sim' : 'Não'}'),
         ],
       ),
