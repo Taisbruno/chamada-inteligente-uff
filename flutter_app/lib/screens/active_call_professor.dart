@@ -5,6 +5,7 @@ import 'package:flutter_app/model/Presence.dart';
 import 'package:flutter_app/model/Roll.dart';
 import 'package:flutter_app/services/roll/presence/presence_service.dart';
 import 'package:flutter_app/services/roll/presence/websocket_service.dart';
+import 'package:flutter_app/utils/TwoDigits.dart';
 import 'package:flutter_app/widgets/ActiveCall/add_student.dart';
 import 'package:flutter_app/widgets/ActiveCall/dialog_finished_roll.dart';
 import 'package:flutter_app/widgets/ActiveCall/end_call.dart';
@@ -63,16 +64,17 @@ class _ActiveCallState extends State<ActiveCallScreen> {
 
     if (widget.scheduledFinishTime != '') {
       DateTime now = DateTime.now();
-      String time = '${now.hour}:${now.minute}';
+
+      String time = '${now.hour}:${twoDigits(now.minute)}';
 
       if (time == widget.scheduledFinishTime) {
-        stopTimer();
         showDialog(
             barrierDismissible: false,
             context: context,
             builder: (context) => Dialog(
                   child: dialogFinishedRoll(context),
                 ));
+        stopTimer();
       }
     }
   }

@@ -66,7 +66,15 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            getFirstButton(openRoll, context, endTimecontroller, details.classCode),
+            button(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => RecurrentChamadaConfiguration(
+                            classCode: details.classCode,
+                          )));
+                },
+                title: "Agendar chamada",
+                color: Colors.transparent),
             button(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -75,16 +83,13 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
                 },
                 title: "Acessar histórico",
                 color: Colors.transparent),
-            button(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => RecurrentChamadaConfiguration(classCode: details.classCode,)));
-                },
-                title: "Configurar Chamada Recorrente",
-                color: Colors.orange),
           ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
+        Center(
+          child: getFirstButton(
+              openRoll, context, endTimecontroller, details.classCode),
+        ),
         const SizedBox(height: 20),
         FutureBuilder(
           future: getStudentsByClass(details.classCode),
@@ -121,7 +126,8 @@ Widget getFirstButton(Roll? openRoll, BuildContext context,
         onPressed: () {
           String time = '';
 
-          if (openRoll.scheduleCloseTime != '') {
+          if (openRoll.scheduleCloseTime != '' &&
+              openRoll.scheduleCloseTime != 'null') {
             DateTime dt = DateTime.parse(openRoll.scheduleCloseTime);
             time = '${dt.hour}:${dt.minute}';
           }

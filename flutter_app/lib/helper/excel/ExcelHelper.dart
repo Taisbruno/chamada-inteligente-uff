@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:excel/excel.dart';
 import 'package:flutter_app/model/HistoryRoll.dart';
 import 'package:flutter_app/model/Student.dart';
+import 'package:flutter_app/utils/TwoDigits.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ExcelHelper {
@@ -65,7 +66,7 @@ class ExcelHelper {
       excel.updateCell(
           getSheetName(),
           CellIndex.indexByColumnRow(columnIndex: col, rowIndex: 0),
-          '${dt.day}/${dt.month}',
+          '${dt.day}/${dt.month} ${twoDigits(dt.hour)}h${twoDigits(dt.minute)}',
           cellStyle: CellStyle(
               backgroundColorHex: 'cde9ee',
               fontSize: 12,
