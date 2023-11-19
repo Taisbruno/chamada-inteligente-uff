@@ -27,13 +27,17 @@ class ExcelHelper {
 
     if (Platform.isAndroid || Platform.isIOS) {
       List<int>? bytes = excel.save(fileName: '$filename.xlsx');
-      Directory directory = await getApplicationDocumentsDirectory();
-      print(directory.path);
-      File('${directory.path}/$filename.xlsx')
-        ..createSync(recursive: true)
-        ..writeAsBytesSync(bytes!);
+      Directory? directory = Platform.isAndroid
+          ? await getExternalStorageDirectory()
+          : await getApplicationDocumentsDirectory();
+      if (directory != null) {
+        print(directory.path);
+        File('${directory.path}/$filename.xlsx')
+          ..createSync(recursive: true)
+          ..writeAsBytesSync(bytes!);
 
-      return '${directory.path}/$filename.xlsx';
+        return '${directory.path}/$filename.xlsx';
+      }
     } else {
       excel.save(fileName: '$filename.xlsx');
     }
