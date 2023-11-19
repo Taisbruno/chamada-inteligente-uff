@@ -10,6 +10,7 @@ import 'package:flutter_app/utils/Toast.dart';
 import 'package:flutter_app/widgets/ClassDetails/StudentClassDetails/dialog_presence_confirmed.dart';
 import 'package:flutter_app/widgets/ClassDetails/StudentClassDetails/student_roll.dart';
 import 'package:flutter_app/widgets/ClassDetails/button.dart';
+import 'package:flutter_app/widgets/shared/loading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
@@ -84,11 +85,13 @@ Widget studentClassDetails(ClassDetailsData details, BuildContext context,
         if (!isLoading)
           studentsInfo(
               details.historic.reversed.toList(), details.userRegistration),
-        if (isLoading) const CircularProgressIndicator()
+        if (isLoading) circularLoading()
       ]));
 }
 
 Widget studentsInfo(List<HistoryRoll> snapshot, String studentRegistration) {
+  snapshot.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+
   return Expanded(
       child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,

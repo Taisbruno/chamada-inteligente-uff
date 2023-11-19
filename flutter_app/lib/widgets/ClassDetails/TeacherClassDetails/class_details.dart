@@ -3,9 +3,10 @@ import 'package:flutter_app/model/Roll.dart';
 import 'package:flutter_app/model/Student.dart';
 import 'package:flutter_app/screens/active_call_professor.dart';
 import 'package:flutter_app/services/classes/enrolled_students_service.dart';
+import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/students_list.dart';
 import 'package:flutter_app/widgets/ClassDetails/button.dart';
 import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/dialog_start_roll.dart';
-import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/student_card.dart';
+import 'package:flutter_app/widgets/shared/loading.dart';
 
 import '../../../screens/class_roll_historic_screen.dart';
 import '../../../screens/recurrent_call_configuration.dart';
@@ -96,7 +97,7 @@ Widget classDetails(ClassDetailsData details, BuildContext context) {
           builder:
               (BuildContext context, AsyncSnapshot<List<Student>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return circularLoading();
             }
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return _noStudents();
@@ -143,33 +144,6 @@ Widget getFirstButton(Roll? openRoll, BuildContext context,
         title: "Ver chamada",
         color: Colors.green);
   }
-}
-
-Widget studentsList(List<Student> snapshot) {
-  return Expanded(
-      child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        'Alunos Inscritos (${snapshot.length}):',
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
-        ),
-      ),
-      Expanded(
-        child: ListView.builder(
-          itemCount: snapshot.length,
-          itemBuilder: (context, index) {
-            return studentCard(StudentCardData(
-                studentName: snapshot[index].name,
-                matricula: snapshot[index].registration));
-          },
-        ),
-      )
-    ],
-  ));
 }
 
 Widget _noStudents() {

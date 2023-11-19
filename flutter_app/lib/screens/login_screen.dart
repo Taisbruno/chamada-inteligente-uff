@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/services/login/login_service.dart';
 import 'package:flutter_app/widgets/LogIn/login_fields.dart';
 import 'package:flutter_app/widgets/SignUp/active_button.dart';
+import 'package:flutter_app/widgets/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 import '../model/User.dart';
@@ -106,11 +107,7 @@ class _LoginPageState extends State<LogInScreen> {
           loginFields(
               _type!, login, context, usernameController, passwordController),
           const SizedBox(height: 20),
-          if (isLoading)
-            const CircularProgressIndicator(
-              color: Colors.white,
-              backgroundColor: Colors.purple,
-            ),
+          if (isLoading) circularLoading(),
           _extraText(),
         ],
       ),

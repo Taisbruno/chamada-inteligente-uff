@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/roll/roll_service.dart';
 import 'package:flutter_app/widgets/RollHistory/roll_history.dart';
+import 'package:flutter_app/widgets/shared/loading.dart';
 
 class ClassRollHistoricScreen extends StatefulWidget {
   final String classCode;
@@ -44,7 +45,7 @@ class _ClassRollHistoricScreenState extends State<ClassRollHistoricScreen> {
         future: getClassHistoric(widget.classCode),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return circularLoading();
           } else if (!snapshot.hasData) {
             return const Center(
                 child: Text("Essa turma ainda não possui uma chamada realizada",

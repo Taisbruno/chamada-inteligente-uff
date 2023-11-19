@@ -9,6 +9,7 @@ import 'package:flutter_app/widgets/shared/button_with_icon.dart';
 import 'package:open_file/open_file.dart';
 
 Widget rollHistory(BuildContext context, List<HistoryRoll> historic) {
+  historic.sort((a, b) => a.createdAt.compareTo(b.createdAt));
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

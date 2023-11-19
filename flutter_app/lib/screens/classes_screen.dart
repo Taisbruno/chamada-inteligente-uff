@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/services/classes/classes_service.dart';
 import 'package:flutter_app/widgets/Classes/class_card.dart';
 import 'package:flutter_app/widgets/Classes/dialog_user.dart';
+import 'package:flutter_app/widgets/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 import '../model/Class.dart';
@@ -67,7 +68,7 @@ class _ClassesPageState extends State<ClassesScreen> {
             future: getClassesByRegistration(user.registration!),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
+                return circularLoading();
               } else if (snapshot.hasError) {
                 return _noClassesOrError(snapshot.error.toString());
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
