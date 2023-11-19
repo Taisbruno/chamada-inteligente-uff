@@ -41,7 +41,9 @@ Widget studentsList(List<Presence> details) {
             return finishedCallStudentCard(FinishedCallStudentCardData(
                 studentName: details[index].studentName,
                 matricula: details[index].studentRegistration,
-                presente: details[index].isPresent ? "Sim" : "Não"));
+                presente: details[index].isPresent ? "Sim" : "Não",
+                atestado: details[index].medicalCertificate,
+                mensagem: details[index].message));
           },
         ),
       )

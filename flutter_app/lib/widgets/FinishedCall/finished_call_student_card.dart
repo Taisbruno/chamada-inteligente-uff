@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/widgets/FinishedCall/dialog_finished_call.dart';
 
 class FinishedCallStudentCardData {
   final String studentName;
@@ -6,13 +7,17 @@ class FinishedCallStudentCardData {
   final String presente;
   final int attendedClasses;
   final bool reproved;
+  final String? atestado;
+  final String mensagem;
 
   FinishedCallStudentCardData(
       {required this.studentName,
       required this.matricula,
       required this.presente,
       this.attendedClasses = 10,
-      this.reproved = false});
+      this.reproved = false,
+      required this.atestado,
+      required this.mensagem});
 }
 
 Widget finishedCallStudentCard(FinishedCallStudentCardData data) {
@@ -35,19 +40,22 @@ Widget finishedCallStudentCard(FinishedCallStudentCardData data) {
           Text('Presente: ${data.presente}'),
         ],
       ),
-      trailing: trailingButton(data.presente),
+      trailing: trailingButton(data.presente, data.atestado, data.mensagem),
     ),
   );
 }
 
-Widget? trailingButton(String presente) {
+Widget? trailingButton(String presente, String? atestado, String mensagem) {
   if (presente == "Não") {
-    return ElevatedButton(
-      onPressed: () {
-        //logica para anexar atestado, verificar se o botão deve aparaecer ou nao. O botão deve aparecer se o aluno faltou
-      },
-      child: const Text('Visualizar \nAtestado'),
-    );
+    if (atestado!.isNotEmpty) {
+      return ElevatedButton(
+        onPressed: () {
+          dialog_finished_call(atestado, mensagem);
+        },
+        child: const Text('Visualizar \nAtestado'),
+      );
+    }
+    return null;
   }
   return null;
 }
