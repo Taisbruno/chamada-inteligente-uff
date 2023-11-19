@@ -49,3 +49,8 @@ jobs:
       - name: Build Apk
         run: flutter build apk --
         working-directory: ./flutter_app
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release
+          path: ./flutter_app/build/app/outputs/flutter-apk/app-release.apk

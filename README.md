@@ -38,10 +38,10 @@ Obtenha o diagnóstico da configuração antes da execução do projeto a partir
 flutter doctor
 ```
 
-Recomenda-se utilizar este modo de compilação para implantar o front-end em ambientes externos de produção, desenvolvidmento, controle de qualidade e etc. A compilação do pacote pode ser feita através do comando:
+Recomenda-se utilizar este modo de compilação para implantar o front-end em ambientes externos de produção, desenvolvimento, controle de qualidade e etc. A compilação do pacote pode ser feita através do comando:
 
 ```
-flutter run
+flutter run -d chrome --web-browser-flag "--disable-web-security"
 ```
 
 ## 3. Testes Unitários do Projeto
