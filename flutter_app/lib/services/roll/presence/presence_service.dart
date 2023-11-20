@@ -47,3 +47,11 @@ Future<http.Response> invalidatePresence(String presenceId) async {
 
   return response;
 }
+
+Future<http.Response> validatePresence(String presenceId) async {
+  final response = await http.patch(
+      Uri.parse("$baseApiUrl/presences/validate-presence?id=$presenceId"),
+      headers: requestHeaders);
+
+  return response;
+}

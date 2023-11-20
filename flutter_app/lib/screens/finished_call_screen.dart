@@ -12,6 +12,8 @@ class FinishedClassScreen extends StatefulWidget {
 }
 
 class _FinishedClassState extends State<FinishedClassScreen> {
+  List<String> approved_presences = [];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,6 +41,13 @@ class _FinishedClassState extends State<FinishedClassScreen> {
   }
 
   Widget _page(BuildContext context) {
-    return finishedCall(widget.historyRoll, context);
+    return finishedCall(widget.historyRoll, context, approved_presences,
+        updateApprovedPresences);
+  }
+
+  updateApprovedPresences(String registration) {
+    setState(() {
+      approved_presences.add(registration);
+    });
   }
 }
