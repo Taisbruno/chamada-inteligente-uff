@@ -54,3 +54,11 @@ Link do Github Issues do Projeto: https://github.com/users/Taisbruno/projects/1
 ## 5. Imagem da EAP
 ![Imagem](docs/images/eap.jpg)
 
+## 6. Integrantes
+
+- Tais Bruno Rabelo
+- Hugo Vieira Bianquini
+- Natalia Bruno Rabelo
+- Pedro Xavier
+- Adriano Souza
+- André Balbi

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-import 'package:intl/intl.dart';
+import 'package:flutter_app/model/Schedule.dart';
+import 'package:flutter_app/services/schedule/schedule_service.dart';
+import 'package:flutter_app/utils/Date_Time.dart';
+import 'package:flutter_app/utils/Toast.dart';
+import 'package:flutter_app/widgets/RecurrentCall/days_of_week_chips.dart';
+import 'package:http/http.dart';
 
 class RecurrentChamadaConfiguration extends StatefulWidget {
   final String classCode; // Assuming you pass classCode to this widget
@@ -21,21 +23,24 @@ class RecurrentChamadaConfigurationState
       TimeOfDay(hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
   TextEditingController locationController = TextEditingController();
   List<String> daysOfWeek = [
+    'Domingo',
     'Segunda',
     'Terça',
     'Quarta',
     'Quinta',
     'Sexta',
     'Sábado',
-    'Domingo'
   ];
   List<String> selectedDays = [];
 
   Future<void> _selectTime(BuildContext context, bool isStartTime) async {
     final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: isStartTime ? startTime : endTime,
-    );
+        context: context,
+        initialTime: isStartTime ? startTime : endTime,
+        hourLabelText: 'Hora',
+        minuteLabelText: 'Minuto',
+        helpText: 'Selecione um horário',
+        initialEntryMode: TimePickerEntryMode.input);
     if (picked != null) {
       setState(() {
         if (isStartTime) {
@@ -47,72 +52,28 @@ class RecurrentChamadaConfigurationState
     }
   }
 
-  Widget buildDaysOfWeekChips() {
-    return Wrap(
-      spacing: 8.0, // Gap between chips
-      children: List<Widget>.generate(
-        daysOfWeek.length,
-        (int index) {
-          return ChoiceChip(
-            label: Text(daysOfWeek[index]),
-            selected: selectedDays.contains(daysOfWeek[index]),
-            onSelected: (bool selected) {
-              setState(() {
-                if (selected) {
-                  selectedDays.add(daysOfWeek[index]);
-                } else {
-                  selectedDays.removeWhere((String name) {
-                    return name == daysOfWeek[index];
-                  });
-                }
-              });
-            },
-          );
-        },
-      ),
-    );
-  }
-
   Future<void> _sendScheduleToBackend() async {
-    Uri url = Uri.parse('http://localhost:8443/schedule/create-schedule/');
+    selectedDays.forEach((element) async {
+      int day = daysOfWeek.indexOf(element);
 
-    for (var day in selectedDays) {
-      int dayOfWeek = daysOfWeek.indexOf(day) + 1;
+      Schedule schedule = Schedule(
+          classCode: widget.classCode,
+          dayOfWeek: day,
+          startTime: DateTimeUtils.formatTimeOfDay(startTime),
+          endTime: DateTimeUtils.formatTimeOfDay(endTime),
+          longitude: "1",
+          latitude: "0");
 
-      Map<String, dynamic> data = {
-        "classCode": widget.classCode,
-        "dayOfWeek": dayOfWeek,
-        "startTime": _formatTimeOfDay(startTime),
-        "endTime": _formatTimeOfDay(endTime),
-        "longitude": locationController.text.split(',')[0].trim(),
-        "latitude": locationController.text.split(',')[1].trim(),
-      };
+      Response response = await ScheduleService().createSchedule(schedule);
 
-      var response = await http.post(url,
-          body: json.encode(data),
-          headers: {"Content-Type": "application/json"});
+      print(response.body);
+
       if (response.statusCode == 200) {
-        _showSnackBar(context, "Chamada Agendada!", Colors.green);
+        showToast(context, "Chamada Agendada!", "OK");
       } else {
-        _showSnackBar(context, "Ocorreu um erro: ${response.body}", Colors.red);
+        showToast(context, "Ocorreu um erro: ${response.body}", "OK");
       }
-    }
-  }
-
-  String _formatTimeOfDay(TimeOfDay time) {
-    final now = DateTime.now();
-    final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
-    final format =
-        DateFormat('HH:mm:ss'); // Use the intl package for formatting
-    return format.format(dt);
-  }
-
-  void _showSnackBar(BuildContext context, String message, Color color) {
-    final snackBar = SnackBar(
-      content: Text(message),
-      backgroundColor: color,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
   }
 
   @override
@@ -154,7 +115,7 @@ class RecurrentChamadaConfigurationState
                           fontSize: 18),
                     ),
                     SizedBox(height: 10),
-                    buildDaysOfWeekChips(),
+                    buildDaysOfWeekChips(daysOfWeek, selectedDays, setState),
                   ],
                 ),
               ),
