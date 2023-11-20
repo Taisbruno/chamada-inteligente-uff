@@ -1,16 +1,21 @@
+import 'package:flutter_app/model/Schedule.dart';
+import 'package:flutter_app/services/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../models/schedule.dart';
+
+Map<String, String> requestHeaders = {
+  'Content-type': 'application/json',
+  'Accept': 'application/json',
+};
 
 class ScheduleService {
-  final Uri _endpoint = Uri.parse('http://localhost:8443/schedule/create-schedule/');
-
-  Future<bool> createSchedule(Schedule schedule) async {
+  Future<http.Response> createSchedule(Schedule schedule) async {
     var response = await http.post(
-      _endpoint,
+      Uri.parse("$baseApiUrl/schedule/create-schedule/"),
       body: json.encode(schedule.toJson()),
-      headers: {"Content-Type": "application/json"},
+      headers: requestHeaders,
     );
-    return response.statusCode == 200;
+
+    return response;
   }
 }
