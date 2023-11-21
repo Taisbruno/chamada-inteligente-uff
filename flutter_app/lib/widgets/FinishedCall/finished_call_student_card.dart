@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/model/HistoryRoll.dart';
 import 'package:flutter_app/model/Presence.dart';
-import 'package:flutter_app/model/Roll.dart';
-import 'package:flutter_app/providers/UserProvider.dart';
 import 'package:flutter_app/widgets/FinishedCall/dialog_finished_call.dart';
 
 class FinishedCallStudentCardData {
