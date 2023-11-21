@@ -3,7 +3,7 @@ class Presence {
   final String studentRegistration;
   final String studentName;
   final String? medicalCertificate;
-  final String message;
+  final String? message;
   final bool isPresent;
   final String entryTime;
   final String exitTime;

@@ -15,6 +15,7 @@ class FinishedClassScreen extends StatefulWidget {
 }
 
 class _FinishedClassState extends State<FinishedClassScreen> {
+  List<String> approved_presences = [];
   bool isLoading = true;
   List<Student> students = [];
 
@@ -63,6 +64,13 @@ class _FinishedClassState extends State<FinishedClassScreen> {
   Widget _page(BuildContext context) {
     return isLoading
         ? circularLoading()
-        : finishedCall(widget.historyRoll, context, students);
+        : finishedCall(widget.historyRoll, context, approved_presences,
+            updateApprovedPresences, students);
+  }
+
+  updateApprovedPresences(String registration) {
+    setState(() {
+      approved_presences.add(registration);
+    });
   }
 }
