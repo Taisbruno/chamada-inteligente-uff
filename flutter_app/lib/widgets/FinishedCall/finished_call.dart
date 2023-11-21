@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/HistoryRoll.dart';
 import 'package:flutter_app/model/Presence.dart';
+import 'package:flutter_app/model/Student.dart';
 import 'package:flutter_app/widgets/FinishedCall/finished_call_student_card.dart';
 
-Widget finishedCall(HistoryRoll details, BuildContext context,
-    List<String> approved_presences, dynamic updateApproved) {
+Widget finishedCall(
+    HistoryRoll details,
+    BuildContext context,
+    List<String> approved_presences,
+    dynamic updateApproved,
+    List<Student> students) {
+  int studentsPresent =
+      details.presences.where((element) => element.isPresent).length;
+
   return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          'Número de alunos presente: ${details.studentsPresent}',
+          'Número de alunos presente: $studentsPresent / ${students.length}',
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -30,7 +38,7 @@ Widget studentsList(BuildContext context, List<String> approved_presences,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
-        'Alunos Inscritos (${details.length}):',
+        'Registros na chamada (${details.length}):',
         style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,

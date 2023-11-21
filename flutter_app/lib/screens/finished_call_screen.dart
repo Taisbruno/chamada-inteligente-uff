@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/HistoryRoll.dart';
+import 'package:flutter_app/model/Student.dart';
+import 'package:flutter_app/services/classes/enrolled_students_service.dart';
 import 'package:flutter_app/widgets/FinishedCall/finished_call.dart';
+import 'package:flutter_app/widgets/shared/loading.dart';
 
 class FinishedClassScreen extends StatefulWidget {
   final HistoryRoll historyRoll;
@@ -13,6 +16,24 @@ class FinishedClassScreen extends StatefulWidget {
 
 class _FinishedClassState extends State<FinishedClassScreen> {
   List<String> approved_presences = [];
+  bool isLoading = true;
+  List<Student> students = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchClassStudents();
+  }
+
+  fetchClassStudents() async {
+    List<Student> studentsResponse =
+        await getStudentsByClass(widget.historyRoll.classCode);
+
+    setState(() {
+      students = studentsResponse;
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +62,10 @@ class _FinishedClassState extends State<FinishedClassScreen> {
   }
 
   Widget _page(BuildContext context) {
-    return finishedCall(widget.historyRoll, context, approved_presences,
-        updateApprovedPresences);
+    return isLoading
+        ? circularLoading()
+        : finishedCall(widget.historyRoll, context, approved_presences,
+            updateApprovedPresences, students);
   }
 
   updateApprovedPresences(String registration) {
