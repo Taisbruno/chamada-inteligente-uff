@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app/utils/TwoDigits.dart';
 import 'package:flutter_app/widgets/ClassDetails/StudentClassDetails/dialog_missed_class.dart';
