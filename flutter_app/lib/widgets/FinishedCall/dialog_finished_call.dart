@@ -14,7 +14,7 @@ Widget dialog_finished_call(
     String matricula,
     String? atestado,
     String? mensagem,
-    dynamic updateApproved) {
+    dynamic fetchPresences) {
   final Uri url = Uri.parse(atestado.toString().replaceAll('"', ''));
 
   return Padding(
@@ -23,23 +23,27 @@ Widget dialog_finished_call(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        Text(
+          "Atestado Médico",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
         ElevatedButton(
-          child: Text('$atestado'),
+          child: Text('Abrir anexo'),
           onPressed: () => acessarAtestado(url),
         ),
         const SizedBox(
           height: 10,
         ),
         Text(
-          '$mensagem',
+          'Mensagem: $mensagem',
           style: TextStyle(
             color: Colors.black87,
             fontSize: 13,
           ),
           textAlign: TextAlign.center,
-        ),
-        const SizedBox(
-          height: 25,
         ),
         const SizedBox(
           height: 30,
@@ -49,7 +53,7 @@ Widget dialog_finished_call(
               Response response = await validatePresence(id);
 
               if (response.statusCode == 200) {
-                updateApproved(matricula);
+                await fetchPresences();
                 showToast(context, "Presença validada", "OK");
               } else {
                 showToast(context,

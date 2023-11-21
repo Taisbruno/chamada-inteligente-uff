@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/HistoryRoll.dart';
+import 'package:flutter_app/model/Presence.dart';
 import 'package:flutter_app/model/Student.dart';
 import 'package:flutter_app/services/classes/enrolled_students_service.dart';
+import 'package:flutter_app/services/roll/presence/presence_service.dart';
 import 'package:flutter_app/widgets/FinishedCall/finished_call.dart';
 import 'package:flutter_app/widgets/shared/loading.dart';
 
@@ -17,11 +19,13 @@ class FinishedClassScreen extends StatefulWidget {
 class _FinishedClassState extends State<FinishedClassScreen> {
   List<String> approved_presences = [];
   bool isLoading = true;
-  List<Student> students = [];
+  List<Student> allStudents = [];
+  List<Presence> presences = [];
 
   @override
   void initState() {
     super.initState();
+    fetchPresences();
     fetchClassStudents();
   }
 
@@ -30,7 +34,21 @@ class _FinishedClassState extends State<FinishedClassScreen> {
         await getStudentsByClass(widget.historyRoll.classCode);
 
     setState(() {
-      students = studentsResponse;
+      allStudents = studentsResponse;
+      isLoading = false;
+    });
+  }
+
+  fetchPresences() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    List<Presence> presencesResponse =
+        await getPresenceByRoll(widget.historyRoll.rollId);
+
+    setState(() {
+      presences = presencesResponse;
       isLoading = false;
     });
   }
@@ -64,8 +82,7 @@ class _FinishedClassState extends State<FinishedClassScreen> {
   Widget _page(BuildContext context) {
     return isLoading
         ? circularLoading()
-        : finishedCall(widget.historyRoll, context, approved_presences,
-            updateApprovedPresences, students);
+        : finishedCall(presences, context, fetchPresences, allStudents);
   }
 
   updateApprovedPresences(String registration) {

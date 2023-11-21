@@ -25,10 +25,7 @@ class FinishedCallStudentCardData {
       required this.mensagem});
 }
 
-Widget finishedCallStudentCard(
-    BuildContext context,
-    List<String> approvedPresences,
-    dynamic updateApproved,
+Widget finishedCallStudentCard(BuildContext context, dynamic fetchPresences,
     FinishedCallStudentCardData data) {
   return Card(
     elevation: 3,
@@ -57,8 +54,7 @@ Widget finishedCallStudentCard(
           data.presente,
           data.atestado,
           data.mensagem,
-          approvedPresences,
-          updateApproved),
+          fetchPresences),
     ),
   );
 }
@@ -71,17 +67,16 @@ Widget? trailingButton(
     String presente,
     String? atestado,
     String? mensagem,
-    List<String> approvedPresences,
-    dynamic updateApproved) {
+    dynamic fetchPresences) {
   if (presente == "Não") {
-    if (atestado != null && !approvedPresences.contains(matricula)) {
+    if (atestado != null) {
       return ElevatedButton(
         onPressed: () {
           showDialog(
               context: context,
               builder: (BuildContext context) => Dialog(
                     child: dialog_finished_call(context, presences, id,
-                        matricula, atestado, mensagem, updateApproved),
+                        matricula, atestado, mensagem, fetchPresences),
                   ));
         },
         child: const Text('Visualizar \nAtestado'),
