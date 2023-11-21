@@ -1,10 +1,6 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app/utils/TwoDigits.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_app/widgets/ClassDetails/StudentClassDetails/dialog_missed_class.dart';
-import 'package:flutter_app/widgets/ClassDetails/StudentClassDetails/dialog_presence_confirmed.dart';
 
 class StudentRollData {
   final String date;
