@@ -113,7 +113,7 @@ Widget studentsInfo(List<HistoryRoll> snapshot, String studentRegistration) {
             return studentRoll(StudentRollData(
                 date: snapshot[index].createdAt,
                 presence: checkIsPresent(
-                    snapshot[index].presences, studentRegistration)));
+                    snapshot[index].presences, studentRegistration)),context);
           },
         ),
       )
