@@ -55,3 +55,38 @@ Future<http.Response> validatePresence(String presenceId) async {
 
   return response;
 }
+
+Future<http.Response> createPresenceWithCertificate(String registration,
+    String rollId, String fileName, String base64File, String? message) async {
+  final body = jsonEncode({
+    'studentRegistration': registration,
+    'rollId': rollId,
+    'message': message ?? '',
+    'filename': fileName,
+    'certificate': base64File,
+  });
+
+  final response = await http.post(
+      Uri.parse("$baseApiUrl/presences/create-presence"),
+      body: body,
+      headers: requestHeaders);
+
+  return response;
+}
+
+Future<http.Response> insertCertificate(String presenceId,
+    String studentRegistration, String filename, String base64File) async {
+  final body = jsonEncode({
+    'studentRegistration': studentRegistration,
+    'id': presenceId,
+    'filename': filename,
+    'certificate': base64File,
+  });
+
+  final response = await http.patch(
+      Uri.parse("$baseApiUrl/presences/insert-certificate"),
+      body: body,
+      headers: requestHeaders);
+
+  return response;
+}

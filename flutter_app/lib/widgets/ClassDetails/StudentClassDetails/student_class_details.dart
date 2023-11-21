@@ -36,7 +36,7 @@ class ClassDetailsData {
 }
 
 Widget studentClassDetails(ClassDetailsData details, BuildContext context,
-    bool isPresent, Function updatePresence, bool isLoading) {
+    bool isPresent, Function updatePresence, bool isLoading, dynamic refetch) {
   UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
 
   return Padding(
@@ -83,13 +83,14 @@ Widget studentClassDetails(ClassDetailsData details, BuildContext context,
         ),
         const SizedBox(height: 20),
         if (!isLoading)
-          studentsInfo(
-              details.historic.reversed.toList(), details.userRegistration),
+          studentsInfo(details.historic.reversed.toList(),
+              details.userRegistration, refetch),
         if (isLoading) circularLoading()
       ]));
 }
 
-Widget studentsInfo(List<HistoryRoll> snapshot, String studentRegistration) {
+Widget studentsInfo(
+    List<HistoryRoll> snapshot, String studentRegistration, dynamic refetch) {
   snapshot.sort((a, b) => a.createdAt.compareTo(b.createdAt));
 
   return Expanded(
@@ -110,10 +111,16 @@ Widget studentsInfo(List<HistoryRoll> snapshot, String studentRegistration) {
           itemBuilder: (context, index) {
             //arrumar a chamada para o construtor StudentRollData, variavel presence
 
-            return studentRoll(StudentRollData(
-                date: snapshot[index].createdAt,
-                presence: checkIsPresent(
-                    snapshot[index].presences, studentRegistration)),context);
+            return StudentRollData(
+              date: snapshot[index].createdAt,
+              presence: checkIsPresent(
+                  snapshot[index].presences, studentRegistration),
+              rollId: snapshot[index].rollId,
+              registration: studentRegistration,
+              refetch: refetch,
+              certificate: getCertificate(
+                  snapshot[index].presences, studentRegistration),
+            );
           },
         ),
       )
@@ -196,4 +203,16 @@ bool checkIsPresent(List<Presence> presences, String registration) {
       .contains(registration);
 
   return isPresent;
+}
+
+String? getCertificate(List<Presence> presences, String registration) {
+  Presence? presence = presences
+      .where((element) => element.studentRegistration == registration)
+      .firstOrNull;
+
+  if (presence != null) {
+    return presence.medicalCertificate;
+  }
+
+  return null;
 }
