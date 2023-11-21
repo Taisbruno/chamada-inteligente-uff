@@ -4,6 +4,7 @@ import 'package:flutter_app/services/schedule/schedule_service.dart';
 import 'package:flutter_app/utils/Date_Time.dart';
 import 'package:flutter_app/utils/Toast.dart';
 import 'package:flutter_app/widgets/RecurrentCall/days_of_week_chips.dart';
+import 'package:flutter_app/widgets/RecurrentCall/locales_dropdown.dart';
 import 'package:http/http.dart';
 
 class RecurrentChamadaConfiguration extends StatefulWidget {
@@ -21,7 +22,7 @@ class RecurrentChamadaConfigurationState
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime =
       TimeOfDay(hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
-  TextEditingController locationController = TextEditingController();
+  LocaleData localeData = locales.first;
   List<String> daysOfWeek = [
     'Domingo',
     'Segunda',
@@ -32,6 +33,12 @@ class RecurrentChamadaConfigurationState
     'Sábado',
   ];
   List<String> selectedDays = [];
+
+  void updateCoordinates(LocaleData receivedLocale) {
+    setState(() {
+      localeData = receivedLocale;
+    });
+  }
 
   Future<void> _selectTime(BuildContext context, bool isStartTime) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -61,8 +68,8 @@ class RecurrentChamadaConfigurationState
           dayOfWeek: day,
           startTime: DateTimeUtils.formatTimeOfDay(startTime),
           endTime: DateTimeUtils.formatTimeOfDay(endTime),
-          longitude: "1",
-          latitude: "0");
+          longitude: localeData.longitude,
+          latitude: localeData.latitude);
 
       Response response = await ScheduleService().createSchedule(schedule);
 
@@ -120,41 +127,38 @@ class RecurrentChamadaConfigurationState
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 14.0),
                 child: ListTile(
                   title: Text(
                     'Hora Início Chamada: ${startTime.format(context)}',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w600),
                   ),
                   trailing: Icon(Icons.access_time, color: Colors.white),
                   onTap: () => _selectTime(context, true),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 14.0),
                 child: ListTile(
                   title: Text('Hora Fim Chamada: ${endTime.format(context)}',
-                      style: TextStyle(color: Colors.white)),
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w600)),
                   trailing: Icon(Icons.access_time, color: Colors.white),
                   onTap: () => _selectTime(context, false),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: TextField(
-                  controller: locationController,
-                  decoration: InputDecoration(
-                      labelText: 'Local',
-                      fillColor: Colors.white,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      labelStyle: TextStyle(color: Colors.white)),
-                ),
+              SizedBox(height: 15),
+              Text(
+                'Localidade:',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 17),
               ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: localesDropdown(localeData, updateCoordinates)),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
