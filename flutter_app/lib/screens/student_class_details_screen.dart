@@ -124,8 +124,8 @@ class _StudentDetailsState extends State<StudentClassDetailsScreen> {
         historic: historicRolls,
         userRegistration: userProvider.registration!);
 
-    return studentClassDetails(
-        details, context, isPresent, _updatePresence, isLoading);
+    return studentClassDetails(details, context, isPresent, _updatePresence,
+        isLoading, fetchRolllHistory);
   }
 
   _updatePresence() {
