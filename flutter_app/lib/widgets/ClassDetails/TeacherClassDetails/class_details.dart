@@ -3,6 +3,7 @@ import 'package:flutter_app/model/Roll.dart';
 import 'package:flutter_app/model/Student.dart';
 import 'package:flutter_app/screens/active_call_professor.dart';
 import 'package:flutter_app/services/classes/enrolled_students_service.dart';
+import 'package:flutter_app/utils/TwoDigits.dart';
 import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/students_list.dart';
 import 'package:flutter_app/widgets/ClassDetails/button.dart';
 import 'package:flutter_app/widgets/ClassDetails/TeacherClassDetails/dialog_start_roll.dart';
@@ -130,7 +131,7 @@ Widget getFirstButton(Roll? openRoll, BuildContext context,
           if (openRoll.scheduleCloseTime != '' &&
               openRoll.scheduleCloseTime != 'null') {
             DateTime dt = DateTime.parse(openRoll.scheduleCloseTime);
-            time = '${dt.hour}:${dt.minute}';
+            time = '${dt.hour}:${twoDigits(dt.minute)}';
           }
 
           Navigator.of(context).push(MaterialPageRoute(
